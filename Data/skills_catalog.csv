@@ -1,0 +1,53 @@
+skill_id,skill_name,category
+SKL-001,AWS,Database & Cloud
+SKL-002,Agile,Soft Skills
+SKL-003,Angular,Web Development
+SKL-004,Azure,Database & Cloud
+SKL-005,Bash,DevOps & Tools
+SKL-006,C#,Programming Language
+SKL-007,C++,Programming Language
+SKL-008,CI/CD,DevOps & Tools
+SKL-009,CSS,Web Development
+SKL-010,Communication,Soft Skills
+SKL-011,Data Analysis,Data Science
+SKL-012,Django,Web Development
+SKL-013,Docker,Database & Cloud
+SKL-014,Express.js,Web Development
+SKL-015,Flask,Web Development
+SKL-016,GCP,Database & Cloud
+SKL-017,Git,DevOps & Tools
+SKL-018,Go,Programming Language
+SKL-019,GraphQL,DevOps & Tools
+SKL-020,HTML,Web Development
+SKL-021,Java,Programming Language
+SKL-022,JavaScript,Programming Language
+SKL-023,Jenkins,DevOps & Tools
+SKL-024,Kubernetes,Database & Cloud
+SKL-025,Leadership,Soft Skills
+SKL-026,Linux,DevOps & Tools
+SKL-027,Machine Learning,Data Science
+SKL-028,Microservices,DevOps & Tools
+SKL-029,MongoDB,Database & Cloud
+SKL-030,MySQL,Database & Cloud
+SKL-031,Node.js,Web Development
+SKL-032,NumPy,Data Science
+SKL-033,PHP,Programming Language
+SKL-034,Pandas,Data Science
+SKL-035,PostgreSQL,Database & Cloud
+SKL-036,Problem Solving,Soft Skills
+SKL-037,Project Management,Soft Skills
+SKL-038,PyTorch,Data Science
+SKL-039,Python,Programming Language
+SKL-040,R,Data Science
+SKL-041,REST API,DevOps & Tools
+SKL-042,React,Web Development
+SKL-043,Redis,Database & Cloud
+SKL-044,Ruby,Programming Language
+SKL-045,Rust,Programming Language
+SKL-046,SQL,Database & Cloud
+SKL-047,Scrum,Soft Skills
+SKL-048,Spring,Web Development
+SKL-049,Swift,Programming Language
+SKL-050,Tableau,Data Science
+SKL-051,TensorFlow,Data Science
+SKL-052,Vue.js,Web Development

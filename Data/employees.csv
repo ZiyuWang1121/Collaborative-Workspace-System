@@ -1,0 +1,301 @@
+employee_id,name,job_title,experience_years,performance_rating,email,department,skills,total_skills,avg_proficiency
+EMP-100,Allison Hill,System Architect,7,3.9,allison.hill@company.com,Data Science,CI/CD:5; Agile:4; Spring:5; Go:4; GCP:4; Flask:4,6,4.3
+EMP-101,Noah Rhodes,Project Manager,3,3.3,noah.rhodes@company.com,Engineering,C++:3; Ruby:3; Spring:3; PostgreSQL:3,4,3.0
+EMP-102,Angie Henderson,Data Analyst,10,4.4,angie.henderson@company.com,Engineering,Microservices:4; Angular:5; Agile:3; C#:4; Express.js:5; Flask:4; PHP:5; Python:4,8,4.2
+EMP-103,Daniel Wagner,UI/UX Designer,4,3.5,daniel.wagner@company.com,Data Science,Docker:4; SQL:5; React:3; Rust:4; PostgreSQL:3; Machine Learning:3,6,3.7
+EMP-104,Cristian Santos,Product Manager,4,3.7,cristian.santos@company.com,Data Science,PyTorch:2; Go:3; Vue.js:4; AWS:4; Swift:5,5,3.6
+EMP-105,Connie Lawrence,Project Manager,10,4.6,connie.lawrence@company.com,Design,Microservices:5; JavaScript:4; Go:4; Communication:3; Express.js:4; TensorFlow:4; C++:5; C#:5,8,4.2
+EMP-106,Abigail Shaffer,Senior Software Engineer,9,3.8,abigail.shaffer@company.com,Engineering,Jenkins:5; Vue.js:5; Python:5; Git:5; Angular:4; Scrum:4; MySQL:3; PostgreSQL:5,8,4.5
+EMP-107,Gina Moore,DevOps Engineer,7,3.7,gina.moore@company.com,Engineering,C#:4; Problem Solving:3; GraphQL:5; REST API:3; R:5; Kubernetes:4; Project Management:5; Docker:4,8,4.1
+EMP-108,Gabrielle Davis,Software Engineer,12,4.9,gabrielle.davis@company.com,Product,Redis:5; Flask:4; Tableau:5; GraphQL:4; C#:4; TensorFlow:5; C++:5; Leadership:5,8,4.6
+EMP-109,Ryan Munoz,Product Manager,13,4.6,ryan.munoz@company.com,Engineering,REST API:4; Kubernetes:3; Data Analysis:5; TensorFlow:4; Jenkins:4; Express.js:4; Redis:3; Go:4,8,3.9
+EMP-110,Monica Herrera,Data Analyst,7,4.3,monica.herrera@company.com,Design,REST API:4; Data Analysis:4; PostgreSQL:4; Scrum:3; GCP:5; TensorFlow:5,6,4.2
+EMP-111,Jamie Arnold,DevOps Engineer,7,4.1,jamie.arnold@company.com,Engineering,Go:4; REST API:4; Rust:4; Problem Solving:5; Flask:4; Ruby:5; Java:3,7,4.1
+EMP-112,Lisa Hensley,Backend Developer,9,4.2,lisa.hensley@company.com,Data Science,Angular:4; Java:3; Linux:4; Go:5; Bash:5; Express.js:4; Project Management:5; TensorFlow:4,8,4.2
+EMP-113,Michele Williams,System Architect,6,3.5,michele.williams@company.com,Data Science,NumPy:5; Linux:5; React:5; MySQL:4; Communication:5; Git:3; CSS:5,7,4.6
+EMP-114,Dylan Miller,Project Manager,1,3.8,dylan.miller@company.com,DevOps,Problem Solving:2; PostgreSQL:2; Git:3,3,2.3
+EMP-115,Brian Ramirez,DevOps Engineer,11,4.5,brian.ramirez@company.com,Engineering,PyTorch:5; Linux:5; Kubernetes:4; Flask:4; CSS:4; PHP:5; NumPy:5; C#:5,8,4.6
+EMP-116,Holly Wood,Senior Software Engineer,11,4.4,holly.wood@company.com,Design,Communication:4; REST API:5; Data Analysis:5; Ruby:4; Microservices:4; Python:5; Bash:5; Leadership:5,8,4.6
+EMP-117,Derek Zuniga,Data Analyst,11,4.8,derek.zuniga@company.com,DevOps,MySQL:4; Pandas:3; Git:5; Problem Solving:5; AWS:5; Ruby:5; CI/CD:4; Scrum:5,8,4.5
+EMP-118,Lisa Jackson,Full Stack Developer,8,4.4,lisa.jackson@company.com,Engineering,Tableau:5; React:5; JavaScript:4; CI/CD:5; GraphQL:5; Microservices:5; Data Analysis:4; MySQL:4,8,4.6
+EMP-119,Carla Gray,Project Manager,4,3.3,carla.gray@company.com,Engineering,Scrum:3; Git:5; PHP:4; Swift:5; Django:3; Tableau:4,6,4.0
+EMP-120,Margaret Hawkins DDS,System Architect,14,4.8,margaret.hawkins.dds@company.com,DevOps,HTML:5; REST API:4; PHP:5; Python:5; Docker:3; Communication:5; Kubernetes:5; Data Analysis:4,8,4.5
+EMP-121,Patty Perez,UI/UX Designer,4,3.1,patty.perez@company.com,Product,AWS:4; Python:4; Java:4; NumPy:3; Agile:4; CI/CD:2,6,3.5
+EMP-122,Ethan Adams,Full Stack Developer,3,3.2,ethan.adams@company.com,Engineering,GCP:3; Azure:3; Project Management:3,3,3.0
+EMP-123,Tommy Walter,Senior Software Engineer,9,4.7,tommy.walter@company.com,Design,Scrum:4; NumPy:4; Bash:5; Swift:5; PostgreSQL:4; CSS:5; Vue.js:5; Redis:5,8,4.6
+EMP-124,Matthew Foster,UI/UX Designer,7,4.4,matthew.foster@company.com,DevOps,Data Analysis:4; Git:3; Pandas:5; Python:3; Microservices:4; Express.js:5,6,4.0
+EMP-125,Judy Baker,Project Manager,8,4.5,judy.baker@company.com,Design,Rust:5; Docker:4; SQL:3; HTML:5; Linux:4; Redis:4; React:4; Kubernetes:3,8,4.0
+EMP-126,Justin Baker,UI/UX Designer,10,4.6,justin.baker@company.com,DevOps,MongoDB:4; CI/CD:5; GCP:5; Flask:4; Bash:4; JavaScript:5; Agile:4; PyTorch:5,8,4.5
+EMP-127,Stephanie Ross,Backend Developer,13,4.7,stephanie.ross@company.com,Engineering,PyTorch:3; Flask:5; AWS:5; Bash:5; SQL:5; REST API:5; Azure:4; TensorFlow:4,8,4.5
+EMP-128,Zachary Hicks,Software Engineer,7,3.5,zachary.hicks@company.com,Data Science,JavaScript:5; Bash:5; PHP:4; GCP:4; Go:4; Redis:4; NumPy:5,7,4.4
+EMP-129,Anthony Rodriguez,UI/UX Designer,8,4.3,anthony.rodriguez@company.com,Design,CSS:5; Scrum:5; Project Management:3; Tableau:5; Node.js:4; GCP:3; Spring:4,7,4.1
+EMP-130,Rebecca Henderson,Backend Developer,10,5.0,rebecca.henderson@company.com,Engineering,C++:2; Vue.js:4; Redis:4; Microservices:4; Jenkins:5; Swift:3; Machine Learning:4; MySQL:5,8,3.9
+EMP-131,James Ferrell,System Architect,10,4.5,james.ferrell@company.com,Data Science,React:5; Vue.js:5; C++:5; Azure:5; Linux:5; Scrum:5; JavaScript:5; Tableau:5,8,5.0
+EMP-132,Tricia Valencia,Backend Developer,1,3.7,tricia.valencia@company.com,Data Science,Docker:3; PostgreSQL:3; MongoDB:4,3,3.3
+EMP-133,Nathan Maldonado,DevOps Engineer,8,4.3,nathan.maldonado@company.com,Engineering,Django:4; Go:4; MySQL:4; GCP:3; Bash:5; MongoDB:4; Problem Solving:5; C++:3,8,4.0
+EMP-134,Debra Davidson,System Architect,13,4.6,debra.davidson@company.com,Design,PostgreSQL:5; AWS:5; C#:5; Swift:5; GCP:5; Data Analysis:4; Machine Learning:5; NumPy:5,8,4.9
+EMP-135,Jeffrey Chavez,Backend Developer,3,3.2,jeffrey.chavez@company.com,Design,Linux:3; Azure:4; Data Analysis:4,3,3.7
+EMP-136,Sherri Baker,Software Engineer,7,3.6,sherri.baker@company.com,Design,Leadership:3; Git:5; MySQL:5; GraphQL:5; Microservices:4; Rust:3; Problem Solving:4,7,4.1
+EMP-137,Cassandra Gaines,Frontend Developer,9,5.0,cassandra.gaines@company.com,Engineering,Docker:4; GraphQL:4; Express.js:4; Azure:5; PyTorch:5; PostgreSQL:5; Swift:3; Java:2,8,4.0
+EMP-138,Elizabeth Fowler,Software Engineer,5,3.8,elizabeth.fowler@company.com,Engineering,PyTorch:3; Node.js:4; PHP:4; Pandas:4; Data Analysis:5; Azure:5; Tableau:4,7,4.1
+EMP-139,Brittany Farmer,Frontend Developer,1,3.0,brittany.farmer@company.com,Data Science,Bash:3; Python:2; Ruby:3,3,2.7
+EMP-140,Paula Moreno,DevOps Engineer,8,3.8,paula.moreno@company.com,Engineering,CI/CD:3; Project Management:4; GCP:5; PyTorch:3; Python:5; Angular:4; R:4,7,4.0
+EMP-141,Fred Smith,DevOps Engineer,12,5.0,fred.smith@company.com,Product,Redis:5; PyTorch:5; Project Management:5; Pandas:4; Java:5; Git:4; Express.js:3; Vue.js:5,8,4.5
+EMP-142,Sherry Decker,Backend Developer,5,3.5,sherry.decker@company.com,Design,Git:2; Linux:4; CSS:4; Redis:4; React:4; HTML:4,6,3.7
+EMP-143,Anthony Humphrey,Data Scientist,9,4.1,anthony.humphrey@company.com,DevOps,Swift:4; Bash:5; AWS:5; MySQL:4; R:5; Project Management:3; C++:5; TensorFlow:4,8,4.4
+EMP-144,Angelica Tucker,Backend Developer,10,4.1,angelica.tucker@company.com,Data Science,PHP:4; Git:3; CSS:4; Jenkins:3; Bash:5; GCP:3; Kubernetes:4; GraphQL:4,8,3.8
+EMP-145,Philip Cannon,Product Manager,3,3.7,philip.cannon@company.com,DevOps,PostgreSQL:5; SQL:2; HTML:4; R:5,4,4.0
+EMP-146,John Pierce,Software Engineer,2,3.2,john.pierce@company.com,Data Science,Redis:3; Problem Solving:2; HTML:3; C++:3,4,2.8
+EMP-147,Shane Henderson,Full Stack Developer,11,4.4,shane.henderson@company.com,Data Science,CI/CD:5; C++:3; Spring:4; Problem Solving:5; Communication:5; Go:4; GraphQL:5; Python:4,8,4.4
+EMP-148,Joshua Blair,Project Manager,3,3.4,joshua.blair@company.com,Product,JavaScript:2; Express.js:4; Ruby:4,3,3.3
+EMP-149,Eric Carney,UI/UX Designer,12,5.0,eric.carney@company.com,Engineering,NumPy:5; Git:4; Azure:5; C#:5; REST API:5; Microservices:5; Go:5; Angular:5,8,4.9
+EMP-150,Jessica Holmes,Data Scientist,14,4.9,jessica.holmes@company.com,DevOps,Tableau:5; CSS:5; REST API:5; Git:4; Data Analysis:4; MongoDB:3; Problem Solving:5; Microservices:5,8,4.5
+EMP-151,Danny Morgan,Software Engineer,4,3.6,danny.morgan@company.com,DevOps,CI/CD:5; Bash:4; Rust:5; Communication:3,4,4.2
+EMP-152,Crystal Robinson,Software Engineer,3,3.7,crystal.robinson@company.com,Design,Kubernetes:4; PyTorch:3; Problem Solving:4; Communication:3,4,3.5
+EMP-153,Mark Perez,Frontend Developer,2,2.8,mark.perez@company.com,Engineering,Angular:1; HTML:3; Kubernetes:2,3,2.0
+EMP-154,Shannon Jones,Data Scientist,3,3.7,shannon.jones@company.com,Product,Express.js:3; Ruby:4; GCP:4; Redis:3; C++:5,5,3.8
+EMP-155,Michael Lewis,UI/UX Designer,2,3.2,michael.lewis@company.com,Data Science,Machine Learning:3; R:2; Spring:3,3,2.7
+EMP-156,Timothy Duncan,Backend Developer,10,4.2,timothy.duncan@company.com,Data Science,Data Analysis:5; Django:3; Machine Learning:4; Agile:5; TensorFlow:5; JavaScript:5; Tableau:5; Redis:4,8,4.5
+EMP-157,Richard Aguirre,Full Stack Developer,1,3.2,richard.aguirre@company.com,Engineering,Data Analysis:3; TensorFlow:3; Rust:1,3,2.3
+EMP-158,Brent Jordan,DevOps Engineer,10,4.6,brent.jordan@company.com,Data Science,Angular:5; Node.js:5; Flask:4; Docker:5; MySQL:5; Jenkins:4; HTML:5; Tableau:5,8,4.8
+EMP-159,John Daniel,Software Engineer,9,3.6,john.daniel@company.com,DevOps,Redis:4; Docker:4; Linux:4; JavaScript:4; Go:4; Bash:4; Spring:5; Jenkins:5,8,4.2
+EMP-160,Victoria Garcia,DevOps Engineer,4,4.0,victoria.garcia@company.com,Product,Ruby:3; PostgreSQL:4; JavaScript:3; Agile:5; CI/CD:4,5,3.8
+EMP-161,Gerald Hensley,Frontend Developer,1,2.5,gerald.hensley@company.com,Engineering,PyTorch:4; Git:4; Angular:2,3,3.3
+EMP-162,Connor West,Data Analyst,2,3.3,connor.west@company.com,Product,Microservices:2; Jenkins:2; Scrum:4,3,2.7
+EMP-163,Donald Wright,DevOps Engineer,6,3.7,donald.wright@company.com,Product,Python:3; PHP:4; CI/CD:4; Leadership:4; Project Management:4; Docker:5,6,4.0
+EMP-164,Jessica Callahan,Software Engineer,6,3.9,jessica.callahan@company.com,Data Science,SQL:5; Microservices:4; AWS:5; Pandas:4; PostgreSQL:5; Ruby:5,6,4.7
+EMP-165,Amber Kidd,Data Scientist,11,4.1,amber.kidd@company.com,Product,Microservices:5; Bash:4; Redis:4; JavaScript:5; R:2; Java:4; Tableau:4; CI/CD:3,8,3.9
+EMP-166,Tracy House,UI/UX Designer,5,4.0,tracy.house@company.com,Product,HTML:4; Redis:3; Machine Learning:3; Java:4; Linux:3; Rust:4,6,3.5
+EMP-167,Carol Tucker,UI/UX Designer,7,3.6,carol.tucker@company.com,DevOps,CSS:5; Docker:5; Machine Learning:4; Redis:4; Leadership:5; Ruby:5; Django:5,7,4.7
+EMP-168,James Brown,Data Analyst,2,3.4,james.brown@company.com,Engineering,HTML:3; Linux:3; Problem Solving:2,3,2.7
+EMP-169,William Baker,Full Stack Developer,1,3.3,william.baker@company.com,DevOps,GraphQL:4; Express.js:3; Microservices:2,3,3.0
+EMP-170,Jordan Henderson,Data Analyst,14,5.0,jordan.henderson@company.com,Design,React:5; Java:5; MySQL:5; MongoDB:3; Swift:5; Ruby:4; Express.js:5; PHP:4,8,4.5
+EMP-171,Whitney Peters,Project Manager,14,5.0,whitney.peters@company.com,Product,Data Analysis:5; Redis:5; C#:5; GraphQL:3; PHP:4; TensorFlow:3; REST API:4; R:5,8,4.2
+EMP-172,Brittney Phillips,Senior Software Engineer,8,3.9,brittney.phillips@company.com,Engineering,Swift:5; GCP:5; Ruby:4; HTML:4; Flask:5; Docker:4; Communication:5; Agile:5,8,4.6
+EMP-173,Lauren Daniels,Backend Developer,13,5.0,lauren.daniels@company.com,Data Science,Node.js:5; R:5; Tableau:4; Bash:5; MySQL:5; Machine Learning:4; REST API:5; Project Management:4,8,4.6
+EMP-174,Amy Silva,Project Manager,6,4.3,amy.silva@company.com,Data Science,Rust:4; Leadership:2; NumPy:4; Linux:5; GCP:5,5,4.0
+EMP-175,Sarah Moore,System Architect,10,4.3,sarah.moore@company.com,DevOps,Rust:4; AWS:4; Swift:5; C++:4; Microservices:3; Flask:5; Django:3; Vue.js:4,8,4.0
+EMP-176,Angela Lopez,Product Manager,8,4.1,angela.lopez@company.com,DevOps,Azure:5; Problem Solving:5; GCP:5; CI/CD:5; MySQL:4; CSS:5; Spring:5; Redis:5,8,4.9
+EMP-177,Megan Young,UI/UX Designer,6,3.8,megan.young@company.com,DevOps,Python:4; Java:5; Swift:5; MongoDB:4; R:4; Scrum:5,6,4.5
+EMP-178,Steve Sanchez,DevOps Engineer,5,3.6,steve.sanchez@company.com,Product,Problem Solving:3; MongoDB:3; Data Analysis:5; Spring:4; Node.js:3; TensorFlow:3,6,3.5
+EMP-179,Lisa Barnes,Backend Developer,2,3.3,lisa.barnes@company.com,Design,REST API:4; Go:2; Tableau:3; Pandas:3,4,3.0
+EMP-180,Kelly Donovan,System Architect,6,3.5,kelly.donovan@company.com,Product,GCP:4; Go:5; MongoDB:5; Bash:5; SQL:4,5,4.6
+EMP-181,Mike Allen,Backend Developer,12,4.5,mike.allen@company.com,Design,Go:5; JavaScript:5; Java:4; PostgreSQL:5; C#:4; CSS:5; Communication:4; Flask:5,8,4.6
+EMP-182,Michael Evans,Project Manager,13,4.4,michael.evans@company.com,Design,Communication:5; SQL:5; Express.js:2; Bash:3; Machine Learning:4; Spring:4; JavaScript:5; PostgreSQL:5,8,4.1
+EMP-183,Paul Jones,DevOps Engineer,7,4.0,paul.jones@company.com,Design,Azure:3; Express.js:4; Machine Learning:4; Leadership:5; PyTorch:5; Rust:5; Agile:5; Project Management:4,8,4.4
+EMP-184,Zachary Ferrell,Product Manager,13,4.3,zachary.ferrell@company.com,DevOps,AWS:5; Jenkins:5; HTML:4; Swift:4; Leadership:4; Machine Learning:5; PostgreSQL:4; SQL:5,8,4.5
+EMP-185,Daniel Baker,Backend Developer,4,3.7,daniel.baker@company.com,Design,NumPy:3; Flask:3; Go:3; Microservices:3,4,3.0
+EMP-186,Shirley Suarez,Software Engineer,10,4.0,shirley.suarez@company.com,Data Science,Leadership:5; JavaScript:5; Redis:5; Ruby:5; Linux:4; Scrum:4; Data Analysis:4; MySQL:4,8,4.5
+EMP-187,Christopher Bass,Data Analyst,14,5.0,christopher.bass@company.com,Design,PostgreSQL:3; Agile:4; Linux:5; PyTorch:4; Project Management:4; Redis:5; TensorFlow:5; C#:5,8,4.4
+EMP-188,Lisa Archer,Frontend Developer,7,4.2,lisa.archer@company.com,Design,MySQL:4; Django:5; Azure:5; Git:4; Leadership:4; Java:5; Express.js:4,7,4.4
+EMP-189,Aimee Montoya,Data Scientist,6,3.9,aimee.montoya@company.com,Engineering,JavaScript:4; Swift:4; Leadership:5; Go:5; Machine Learning:5; Git:3,6,4.3
+EMP-190,Matthew Mcmillan,Product Manager,13,5.0,matthew.mcmillan@company.com,Engineering,Agile:3; Spring:3; PostgreSQL:4; Azure:5; Jenkins:5; Flask:4; React:5; Bash:4,8,4.1
+EMP-191,Brian Rodriguez,Software Engineer,10,4.7,brian.rodriguez@company.com,Engineering,GCP:4; Docker:5; Agile:3; R:5; Communication:4; Vue.js:5; CSS:5; Node.js:5,8,4.5
+EMP-192,Denise Jacobs,Data Analyst,11,4.2,denise.jacobs@company.com,Engineering,Express.js:5; MySQL:4; Rust:5; Git:4; Kubernetes:4; Data Analysis:5; Python:4; SQL:5,8,4.5
+EMP-193,Christina Walters,Frontend Developer,7,4.3,christina.walters@company.com,Design,HTML:4; C++:3; PyTorch:4; Agile:5; Vue.js:5; Project Management:5,6,4.3
+EMP-194,John Whitehead,DevOps Engineer,7,4.2,john.whitehead@company.com,Data Science,SQL:5; Docker:5; Bash:4; PyTorch:3; Rust:5; REST API:5,6,4.5
+EMP-195,Anna Henderson,Senior Software Engineer,7,3.7,anna.henderson@company.com,Product,Rust:5; Tableau:5; HTML:4; Ruby:5; Python:4; CI/CD:4; Project Management:5; Angular:3,8,4.4
+EMP-196,Aaron Wise,UI/UX Designer,12,5.0,aaron.wise@company.com,Design,Microservices:5; Redis:4; Kubernetes:5; Bash:4; PHP:4; React:4; JavaScript:5; AWS:5,8,4.5
+EMP-197,Deborah Figueroa,Product Manager,9,4.4,deborah.figueroa@company.com,Data Science,C++:5; Microservices:3; Kubernetes:5; REST API:5; MySQL:5; SQL:5; Communication:4; TensorFlow:4,8,4.5
+EMP-198,Jessica Smith,Project Manager,9,3.6,jessica.smith@company.com,DevOps,Pandas:4; React:4; Go:5; R:3; PostgreSQL:3; Node.js:4; MySQL:5; Microservices:5,8,4.1
+EMP-199,Stephen Mckee,Full Stack Developer,5,3.7,stephen.mckee@company.com,Data Science,Java:4; GCP:3; C#:4; Go:4; MongoDB:3,5,3.6
+EMP-200,Sandra Aguilar,Product Manager,7,4.7,sandra.aguilar@company.com,Design,Project Management:4; R:4; Redis:5; Leadership:5; JavaScript:4; Agile:5,6,4.5
+EMP-201,Cameron Parker,Data Scientist,14,4.6,cameron.parker@company.com,Product,Django:4; NumPy:4; Express.js:5; Jenkins:5; Git:4; JavaScript:5; Go:5; Python:5,8,4.6
+EMP-202,Rebecca Valencia,UI/UX Designer,1,3.0,rebecca.valencia@company.com,Engineering,AWS:2; Pandas:3; Docker:3,3,2.7
+EMP-203,Christine Wright,Backend Developer,3,3.3,christine.wright@company.com,DevOps,Scrum:4; Machine Learning:5; NumPy:4,3,4.3
+EMP-204,Richard Henson,Backend Developer,14,4.8,richard.henson@company.com,Product,Rust:5; Node.js:4; React:3; SQL:4; NumPy:4; MongoDB:5; Agile:5; C#:4,8,4.2
+EMP-205,Marc Moore,Backend Developer,6,3.6,marc.moore@company.com,Design,Linux:4; Rust:5; GCP:4; HTML:4; Redis:4; PyTorch:5; Kubernetes:5,7,4.4
+EMP-206,Sharon Cherry,UI/UX Designer,10,4.3,sharon.cherry@company.com,Design,Pandas:5; Jenkins:4; Microservices:3; Spring:5; Problem Solving:5; JavaScript:5; TensorFlow:5; Rust:5,8,4.6
+EMP-207,Sierra Johnson,Full Stack Developer,11,4.5,sierra.johnson@company.com,DevOps,HTML:4; Git:5; Flask:5; CI/CD:5; Scrum:5; Docker:4; Java:5; Swift:5,8,4.8
+EMP-208,Evelyn Galvan,Project Manager,2,3.1,evelyn.galvan@company.com,Design,Django:3; Docker:4; Express.js:3,3,3.3
+EMP-209,Sharon Cochran,Full Stack Developer,1,3.2,sharon.cochran@company.com,DevOps,Scrum:3; PyTorch:3; Swift:4,3,3.3
+EMP-210,Richard Rodriguez,Data Analyst,12,4.7,richard.rodriguez@company.com,Engineering,GraphQL:5; C++:5; Docker:4; Vue.js:4; Flask:4; Kubernetes:5; Django:3; HTML:5,8,4.4
+EMP-211,Shannon Walker,Project Manager,10,5.0,shannon.walker@company.com,Data Science,PostgreSQL:4; CSS:4; Go:4; Angular:4; Azure:5; Problem Solving:4; GraphQL:5; Rust:5,8,4.4
+EMP-212,Julia Torres,System Architect,3,3.4,julia.torres@company.com,Engineering,Swift:3; NumPy:4; C++:3,3,3.3
+EMP-213,Crystal Johnson,Data Analyst,2,3.6,crystal.johnson@company.com,Data Science,GraphQL:4; Node.js:4; MongoDB:3; JavaScript:2,4,3.2
+EMP-214,Garrett Lin,Software Engineer,5,3.2,garrett.lin@company.com,Engineering,Git:4; Node.js:4; CI/CD:4; Bash:3; Linux:5; NumPy:4,6,4.0
+EMP-215,Diana May,Data Analyst,8,4.5,diana.may@company.com,Data Science,REST API:4; Ruby:4; Azure:4; Communication:5; Swift:4; Project Management:5; HTML:4; C#:3,8,4.1
+EMP-216,William Herrera,Senior Software Engineer,14,4.6,william.herrera@company.com,Design,Problem Solving:5; Swift:4; Machine Learning:4; Python:3; TensorFlow:5; R:3; Flask:5; Pandas:5,8,4.2
+EMP-217,Ashley Waller,Product Manager,2,3.2,ashley.waller@company.com,Design,MongoDB:4; HTML:4; PyTorch:4,3,4.0
+EMP-218,Victor Baker,Full Stack Developer,9,4.6,victor.baker@company.com,Data Science,Project Management:5; R:4; Azure:4; TensorFlow:4; Spring:4; C++:4; Express.js:5; REST API:4,8,4.2
+EMP-219,Jeffrey Chandler,Full Stack Developer,9,4.3,jeffrey.chandler@company.com,Engineering,Redis:4; C#:4; Data Analysis:4; GCP:5; Django:5; Problem Solving:4; Bash:5; Tableau:5,8,4.5
+EMP-220,Larry Dixon,DevOps Engineer,6,4.2,larry.dixon@company.com,Engineering,MongoDB:5; Rust:5; Python:5; Node.js:5; GraphQL:4,5,4.8
+EMP-221,Kenneth Scott,Backend Developer,11,5.0,kenneth.scott@company.com,Product,GraphQL:5; SQL:5; Vue.js:5; Rust:4; MySQL:5; Bash:5; Ruby:4; Flask:4,8,4.6
+EMP-222,April Frost,System Architect,13,4.3,april.frost@company.com,Data Science,PyTorch:5; Redis:4; Docker:4; Microservices:5; CI/CD:5; PostgreSQL:5; Flask:4; React:4,8,4.5
+EMP-223,Michelle Harmon,Full Stack Developer,8,4.4,michelle.harmon@company.com,Product,Communication:4; Bash:4; Azure:3; Data Analysis:4; HTML:3; Python:4; Project Management:4,7,3.7
+EMP-224,Helen Jones,Product Manager,5,3.9,helen.jones@company.com,DevOps,CI/CD:5; MySQL:4; Rust:5; HTML:5; Tableau:4; Linux:5; Go:5,7,4.7
+EMP-225,Erin Edwards,UI/UX Designer,9,5.0,erin.edwards@company.com,Product,NumPy:4; MongoDB:5; C#:3; Python:4; Angular:5; Microservices:5; Java:5; Swift:3,8,4.2
+EMP-226,Michelle Evans,Software Engineer,8,4.1,michelle.evans@company.com,DevOps,C#:5; Flask:5; Ruby:5; Project Management:4; PyTorch:4; Agile:4; Tableau:5; Go:5,8,4.6
+EMP-227,Jason Powell,Software Engineer,14,4.7,jason.powell@company.com,Data Science,Swift:5; Vue.js:3; Django:4; Node.js:4; Pandas:3; React:5; MongoDB:4; Go:5,8,4.1
+EMP-228,Cameron Fisher,Data Analyst,13,4.6,cameron.fisher@company.com,Product,Microservices:4; REST API:3; NumPy:5; C#:4; Node.js:5; Jenkins:5; Machine Learning:3; JavaScript:4,8,4.1
+EMP-229,Megan Orr,System Architect,4,3.8,megan.orr@company.com,Design,C++:2; Data Analysis:5; JavaScript:5; Machine Learning:4,4,4.0
+EMP-230,Elizabeth Kelley,Full Stack Developer,8,4.3,elizabeth.kelley@company.com,Product,Redis:5; Linux:5; Swift:5; Problem Solving:4; Angular:4; MySQL:5; C#:4; Java:4,8,4.5
+EMP-231,Dustin Jordan,Data Scientist,11,4.5,dustin.jordan@company.com,Design,CI/CD:5; Tableau:4; Linux:4; PHP:5; AWS:5; Redis:4; PostgreSQL:5; MySQL:5,8,4.6
+EMP-232,Mary Marshall,Software Engineer,8,3.6,mary.marshall@company.com,Data Science,Docker:5; Pandas:5; Kubernetes:4; R:5; NumPy:4; REST API:4; MongoDB:5; Azure:4,8,4.5
+EMP-233,Daniel Kennedy,Full Stack Developer,2,3.4,daniel.kennedy@company.com,Design,Problem Solving:3; CSS:5; GraphQL:4,3,4.0
+EMP-234,Rebecca Jackson,Project Manager,8,4.3,rebecca.jackson@company.com,Data Science,NumPy:5; CI/CD:5; Agile:5; REST API:4; Python:5; GCP:4; SQL:5,7,4.7
+EMP-235,Jose Schultz,Full Stack Developer,2,3.1,jose.schultz@company.com,Engineering,Problem Solving:4; AWS:3; Machine Learning:3,3,3.3
+EMP-236,Robert Potter,Backend Developer,11,4.5,robert.potter@company.com,DevOps,CI/CD:3; MySQL:4; Vue.js:5; React:5; Communication:5; NumPy:5; SQL:5; GraphQL:4,8,4.5
+EMP-237,Courtney Gonzalez,Project Manager,8,4.5,courtney.gonzalez@company.com,Data Science,Go:3; Machine Learning:4; Node.js:3; Tableau:5; GCP:4; MySQL:4; Problem Solving:3,7,3.7
+EMP-238,David Alvarez,DevOps Engineer,1,2.5,david.alvarez@company.com,Data Science,Docker:4; Python:3; PHP:2,3,3.0
+EMP-239,Angel Perry,Senior Software Engineer,14,5.0,angel.perry@company.com,Product,Go:5; Tableau:5; Machine Learning:4; JavaScript:3; PHP:5; Vue.js:3; AWS:3; GraphQL:5,8,4.1
+EMP-240,Cheyenne Horton,Data Analyst,11,5.0,cheyenne.horton@company.com,Product,PyTorch:5; Redis:5; NumPy:5; Communication:5; MongoDB:5; PostgreSQL:4; Node.js:4; Jenkins:4,8,4.6
+EMP-241,David Douglas Jr.,UI/UX Designer,13,4.9,david.douglas.jr.@company.com,DevOps,Swift:5; PostgreSQL:5; Leadership:4; MySQL:3; Java:5; Docker:5; Rust:5; GCP:4,8,4.5
+EMP-242,Patricia Rodriguez,DevOps Engineer,9,3.9,patricia.rodriguez@company.com,Design,Flask:5; Tableau:4; Machine Learning:5; Angular:3; Java:4; Node.js:5; SQL:3; Leadership:5,8,4.2
+EMP-243,Christopher Rubio,System Architect,4,3.4,christopher.rubio@company.com,Data Science,TensorFlow:4; React:3; Communication:4; NumPy:4; Angular:4,5,3.8
+EMP-244,Amber Wright,UI/UX Designer,7,4.1,amber.wright@company.com,Design,PyTorch:5; JavaScript:5; C++:5; MongoDB:4; Tableau:4; Pandas:5,6,4.7
+EMP-245,Joyce Solis,Software Engineer,1,3.2,joyce.solis@company.com,Data Science,Scrum:2; Communication:2; Machine Learning:3,3,2.3
+EMP-246,Victoria Larson,Senior Software Engineer,7,4.2,victoria.larson@company.com,Engineering,Node.js:5; TensorFlow:5; Git:4; JavaScript:4; R:4; Rust:4; Linux:4,7,4.3
+EMP-247,Stephanie Salazar,Data Scientist,5,4.1,stephanie.salazar@company.com,Design,Ruby:4; PostgreSQL:3; Leadership:3; Java:3; REST API:3,5,3.2
+EMP-248,Kathy Rivas,UI/UX Designer,13,5.0,kathy.rivas@company.com,Engineering,Angular:5; R:3; Bash:4; GCP:5; REST API:5; Ruby:4; GraphQL:5; Flask:5,8,4.5
+EMP-249,Stephanie Manning,DevOps Engineer,6,3.4,stephanie.manning@company.com,Data Science,C++:5; Swift:5; REST API:3; SQL:3; Vue.js:5; MongoDB:3,6,4.0
+EMP-250,David Wright,Project Manager,7,3.7,david.wright@company.com,Product,HTML:4; Agile:5; Angular:4; Java:5; Azure:5; GraphQL:5,6,4.7
+EMP-251,Pamela Boyd,Data Scientist,2,3.0,pamela.boyd@company.com,DevOps,Microservices:4; Communication:4; GCP:2,3,3.3
+EMP-252,Denise Jones,DevOps Engineer,7,3.6,denise.jones@company.com,DevOps,Project Management:3; Ruby:4; Django:5; Data Analysis:5; Tableau:4; C#:4; R:5; Leadership:4,8,4.2
+EMP-253,Devon Flores,System Architect,9,4.4,devon.flores@company.com,Design,GCP:4; NumPy:5; PyTorch:5; Communication:5; Flask:4; MySQL:4; REST API:5; Git:5,8,4.6
+EMP-254,Brenda Hall,Full Stack Developer,5,3.7,brenda.hall@company.com,Engineering,Redis:4; AWS:4; MySQL:5; GraphQL:3; Ruby:4; PostgreSQL:3; Data Analysis:3,7,3.7
+EMP-255,Michelle Brown,Product Manager,9,3.8,michelle.brown@company.com,Product,Jenkins:5; PyTorch:5; HTML:4; REST API:5; Microservices:5; Rust:5; Git:4; MySQL:4,8,4.6
+EMP-256,Joshua Perry,Backend Developer,1,3.3,joshua.perry@company.com,Data Science,Leadership:5; Node.js:3; C++:3,3,3.7
+EMP-257,Jason Stein,DevOps Engineer,14,5.0,jason.stein@company.com,Design,Project Management:4; Jenkins:4; Vue.js:4; GraphQL:5; Rust:5; Swift:5; Agile:4; Redis:5,8,4.5
+EMP-258,Melissa Gates,Full Stack Developer,1,3.1,melissa.gates@company.com,Engineering,AWS:3; Project Management:3; Ruby:3,3,3.0
+EMP-259,Jamie Smith,Data Analyst,6,3.8,jamie.smith@company.com,Data Science,Spring:4; NumPy:4; GraphQL:5; Tableau:4; Vue.js:5,5,4.4
+EMP-260,Paul Castaneda,Data Analyst,13,5.0,paul.castaneda@company.com,Data Science,Vue.js:4; Jenkins:5; Flask:4; REST API:3; Docker:3; R:3; Git:5; Ruby:4,8,3.9
+EMP-261,Jennifer Adkins,System Architect,2,2.9,jennifer.adkins@company.com,Engineering,C++:2; REST API:4; React:2,3,2.7
+EMP-262,Lindsey Walker,Full Stack Developer,5,3.7,lindsey.walker@company.com,Data Science,TensorFlow:3; MongoDB:5; Angular:4; PyTorch:3; Kubernetes:5,5,4.0
+EMP-263,Jeffrey Johnson,Senior Software Engineer,8,4.6,jeffrey.johnson@company.com,DevOps,GraphQL:4; Java:4; Spring:5; Machine Learning:4; Django:5; Docker:5; CSS:4,7,4.4
+EMP-264,Michael Powell,Data Scientist,13,5.0,michael.powell@company.com,Engineering,Pandas:4; PHP:3; Go:5; Data Analysis:5; Git:4; Node.js:2; GraphQL:4; JavaScript:5,8,4.0
+EMP-265,John Anderson,Product Manager,7,3.6,john.anderson@company.com,Design,Bash:5; Communication:4; Swift:4; Flask:3; Ruby:5; Scrum:4; Spring:4,7,4.1
+EMP-266,Alyssa Long,UI/UX Designer,4,3.8,alyssa.long@company.com,Engineering,Kubernetes:3; C#:3; Linux:2; AWS:5; Git:4; PostgreSQL:3,6,3.3
+EMP-267,Alyssa Day,Product Manager,1,3.5,alyssa.day@company.com,Product,Kubernetes:2; Ruby:2; Spring:3,3,2.3
+EMP-268,Joel Williams,Data Analyst,11,4.9,joel.williams@company.com,DevOps,Leadership:5; REST API:5; Kubernetes:5; C++:5; Ruby:5; Flask:4; Node.js:5; Agile:4,8,4.8
+EMP-269,Daniel Murphy,UI/UX Designer,1,3.0,daniel.murphy@company.com,Engineering,Java:3; R:3; Flask:4,3,3.3
+EMP-270,Jamie Walton,System Architect,3,3.0,jamie.walton@company.com,Engineering,MySQL:3; Rust:3; HTML:4; React:4; Machine Learning:2,5,3.2
+EMP-271,Darlene Miller,Frontend Developer,6,3.7,darlene.miller@company.com,Data Science,Angular:5; Vue.js:4; HTML:4; NumPy:4; CI/CD:4; C++:4,6,4.2
+EMP-272,Joshua Cooke,UI/UX Designer,9,4.1,joshua.cooke@company.com,DevOps,CSS:4; Leadership:5; MySQL:4; Kubernetes:5; Redis:4; Rust:4; PostgreSQL:4; Machine Learning:4,8,4.2
+EMP-273,Matthew Harrington,Project Manager,12,4.9,matthew.harrington@company.com,Product,Scrum:4; Communication:4; Machine Learning:3; React:5; C++:4; NumPy:4; R:4; Tableau:5,8,4.1
+EMP-274,Nicole Herring,Software Engineer,3,3.7,nicole.herring@company.com,Design,Rust:4; Kubernetes:4; Express.js:4; MongoDB:3,4,3.8
+EMP-275,Alex Hernandez,Backend Developer,5,3.4,alex.hernandez@company.com,Engineering,Kubernetes:4; C++:5; Ruby:3; Vue.js:4; PostgreSQL:3; React:4; Jenkins:4,7,3.9
+EMP-276,Michael Elliott,DevOps Engineer,5,4.0,michael.elliott@company.com,DevOps,Go:4; Docker:3; CI/CD:4; MySQL:3; C#:3; Redis:5; Express.js:5,7,3.9
+EMP-277,Michael Wang,Software Engineer,3,3.6,michael.wang@company.com,Data Science,Azure:2; TensorFlow:4; JavaScript:3,3,3.0
+EMP-278,Lawrence Adkins,Frontend Developer,9,4.2,lawrence.adkins@company.com,Data Science,TensorFlow:5; Project Management:5; Express.js:5; Bash:5; Problem Solving:5; Tableau:4; PyTorch:4; Scrum:5,8,4.8
+EMP-279,Robert Oconnell,Data Scientist,9,4.6,robert.oconnell@company.com,Product,Tableau:5; Communication:5; Python:5; AWS:5; Go:5; TensorFlow:3; CSS:5; PostgreSQL:5,8,4.8
+EMP-280,Alexander Collins,Frontend Developer,10,4.1,alexander.collins@company.com,Product,CI/CD:4; Redis:4; Agile:5; CSS:4; AWS:5; Jenkins:5; GCP:3; PyTorch:4,8,4.2
+EMP-281,Tina Sanders,Software Engineer,10,4.7,tina.sanders@company.com,Engineering,Django:4; Git:4; Azure:3; CSS:3; Spring:5; Machine Learning:5; Pandas:4; CI/CD:5,8,4.1
+EMP-282,Angela Vaughn,Product Manager,10,5.0,angela.vaughn@company.com,Data Science,MongoDB:5; Tableau:5; Kubernetes:4; PHP:4; PyTorch:5; C++:5; Vue.js:3; Swift:5,8,4.5
+EMP-283,Ashley Barton,Data Analyst,12,4.6,ashley.barton@company.com,Engineering,Angular:5; Scrum:5; Redis:4; Pandas:4; HTML:4; MySQL:5; React:4; Agile:4,8,4.4
+EMP-284,Lindsay Martinez,Product Manager,12,4.9,lindsay.martinez@company.com,Engineering,Linux:5; Microservices:4; Ruby:5; C++:5; NumPy:4; SQL:5; MongoDB:3; Bash:5,8,4.5
+EMP-285,Dr. Hannah Patterson,Data Scientist,6,4.4,dr..hannah.patterson@company.com,DevOps,Python:5; Communication:4; Bash:4; CSS:5; Go:4,5,4.4
+EMP-286,Jonathan Peterson,System Architect,4,2.9,jonathan.peterson@company.com,Design,PyTorch:4; Problem Solving:4; SQL:4; Java:5,4,4.2
+EMP-287,Samantha Garcia,Data Analyst,14,4.8,samantha.garcia@company.com,Engineering,Pandas:5; GraphQL:4; MySQL:4; PHP:4; Python:5; Microservices:4; C++:4; Rust:4,8,4.2
+EMP-288,Madison Poole,System Architect,9,3.8,madison.poole@company.com,Design,React:4; Tableau:4; Problem Solving:5; Scrum:5; Express.js:3; Microservices:4; MongoDB:4; Flask:5,8,4.2
+EMP-289,Jessica Gross,Data Scientist,2,3.4,jessica.gross@company.com,Engineering,MySQL:4; Linux:3; Machine Learning:4; Scrum:3,4,3.5
+EMP-290,Debra Morton,Data Scientist,14,5.0,debra.morton@company.com,Engineering,Microservices:5; Java:4; Redis:5; Git:4; Kubernetes:4; Communication:4; Ruby:5; Node.js:4,8,4.4
+EMP-291,Karen Graham,Senior Software Engineer,12,4.6,karen.graham@company.com,Engineering,C#:4; Vue.js:4; Microservices:5; C++:5; Spring:4; Kubernetes:5; CSS:5; Problem Solving:4,8,4.5
+EMP-292,Debra Christian,Data Analyst,11,4.2,debra.christian@company.com,Design,Problem Solving:5; Vue.js:5; JavaScript:3; Redis:5; CI/CD:4; Machine Learning:5; Jenkins:5; Swift:4,8,4.5
+EMP-293,Angelica Keith,Project Manager,9,4.2,angelica.keith@company.com,Data Science,Azure:5; GraphQL:5; Python:5; HTML:5; Jenkins:4; C++:4; Project Management:5; PHP:4,8,4.6
+EMP-294,John Bishop,Frontend Developer,4,3.4,john.bishop@company.com,DevOps,Redis:5; Node.js:3; Flask:3; C++:4; Jenkins:3,5,3.6
+EMP-295,Allen Rosales,Data Scientist,9,4.5,allen.rosales@company.com,DevOps,CI/CD:5; Swift:5; Go:4; Project Management:5; Flask:3; Microservices:4; Problem Solving:5; R:4,8,4.4
+EMP-296,Daniel Salinas,System Architect,7,4.4,daniel.salinas@company.com,Engineering,React:5; Problem Solving:4; Agile:4; Python:4; Redis:4; Rust:4; Go:4,7,4.1
+EMP-297,Spencer Haynes,Frontend Developer,9,4.9,spencer.haynes@company.com,Data Science,Go:5; Rust:4; Swift:5; HTML:5; JavaScript:5; Jenkins:5; AWS:3; Django:5,8,4.6
+EMP-298,Adam Vaughan,Data Analyst,13,4.5,adam.vaughan@company.com,DevOps,Redis:5; Linux:5; Bash:4; Communication:4; Spring:5; REST API:5; Agile:5; C#:4,8,4.6
+EMP-299,Nathan Freeman,Backend Developer,14,4.8,nathan.freeman@company.com,DevOps,Leadership:5; Machine Learning:5; MySQL:4; JavaScript:5; Data Analysis:5; Kubernetes:4; HTML:4; Java:5,8,4.6
+EMP-300,Melissa Brewer,Data Analyst,1,3.1,melissa.brewer@company.com,Data Science,C#:2; Azure:3; Communication:3,3,2.7
+EMP-301,Ricky Davis II,Data Analyst,12,4.8,ricky.davis.ii@company.com,DevOps,Azure:5; Ruby:4; C#:5; Go:4; MongoDB:3; Redis:5; Microservices:5; NumPy:4,8,4.4
+EMP-302,Elizabeth Perkins,Product Manager,12,4.5,elizabeth.perkins@company.com,Engineering,Machine Learning:4; Go:4; Express.js:5; Swift:5; PHP:5; CI/CD:5; Jenkins:4; Microservices:5,8,4.6
+EMP-303,Joseph Coleman,Full Stack Developer,1,2.7,joseph.coleman@company.com,DevOps,Ruby:3; PyTorch:3; NumPy:2,3,2.7
+EMP-304,Erin Warner,System Architect,3,3.5,erin.warner@company.com,Engineering,HTML:4; Angular:3; Flask:4; Linux:3; Python:4,5,3.6
+EMP-305,David Martinez,Software Engineer,4,3.2,david.martinez@company.com,Product,Express.js:2; HTML:4; Tableau:5; CSS:3; Swift:4,5,3.6
+EMP-306,Bryan Herrera,Full Stack Developer,13,5.0,bryan.herrera@company.com,Design,Java:5; CI/CD:4; AWS:5; NumPy:5; Spring:4; Microservices:4; Django:5; CSS:4,8,4.5
+EMP-307,Cathy Robinson,UI/UX Designer,8,4.1,cathy.robinson@company.com,Engineering,SQL:4; Flask:4; PHP:4; Problem Solving:4; Redis:5; Jenkins:4; Bash:5; Linux:5,8,4.4
+EMP-308,Dr. William Warren,DevOps Engineer,9,4.4,dr..william.warren@company.com,Design,Agile:5; MySQL:4; Bash:5; Java:4; Project Management:5; Microservices:4; Spring:4; Linux:5,8,4.5
+EMP-309,Brian Lee,Full Stack Developer,14,4.8,brian.lee@company.com,Product,CI/CD:4; Linux:5; Agile:4; Java:4; Data Analysis:5; R:4; MySQL:3; Rust:5,8,4.2
+EMP-310,Christopher Smith,Senior Software Engineer,14,4.8,christopher.smith@company.com,Design,Microservices:5; C++:4; GCP:5; Vue.js:5; PyTorch:4; Linux:4; Pandas:5; C#:4,8,4.5
+EMP-311,Denise Mccann,Full Stack Developer,9,4.4,denise.mccann@company.com,Engineering,Spring:5; JavaScript:4; Flask:4; TensorFlow:4; Data Analysis:4; Bash:5; PHP:4; REST API:5,8,4.4
+EMP-312,Melissa Martinez,UI/UX Designer,12,5.0,melissa.martinez@company.com,Data Science,PHP:4; Docker:4; Tableau:5; Jenkins:4; Swift:4; Scrum:3; React:5; Communication:4,8,4.1
+EMP-313,Katherine Salas,Senior Software Engineer,11,4.5,katherine.salas@company.com,Data Science,Communication:4; Git:3; Docker:2; Django:4; Python:5; Vue.js:3; React:2; Bash:5,8,3.5
+EMP-314,Julie Alexander,System Architect,1,3.9,julie.alexander@company.com,DevOps,NumPy:2; MySQL:3; Swift:1,3,2.0
+EMP-315,Anthony Everett,Data Analyst,14,4.4,anthony.everett@company.com,Product,MongoDB:5; Ruby:4; Project Management:4; React:4; REST API:4; R:5; Java:5; Spring:3,8,4.2
+EMP-316,Rodney Morales,Frontend Developer,9,4.3,rodney.morales@company.com,Engineering,MongoDB:4; Bash:4; Node.js:3; Vue.js:3; REST API:3; HTML:5; Go:5; PyTorch:3,8,3.8
+EMP-317,Mark Brown,Data Scientist,13,5.0,mark.brown@company.com,Product,PHP:5; Bash:4; HTML:4; MySQL:5; MongoDB:4; Angular:3; Azure:4; Kubernetes:4,8,4.1
+EMP-318,Justin Torres,Senior Software Engineer,12,5.0,justin.torres@company.com,DevOps,React:5; C#:5; R:4; Python:5; PHP:4; Leadership:5; MySQL:5; PyTorch:5,8,4.8
+EMP-319,Bailey Duran DDS,Project Manager,3,4.2,bailey.duran.dds@company.com,Data Science,Angular:4; MongoDB:3; Vue.js:4; Project Management:5,4,4.0
+EMP-320,Courtney Mills,Data Scientist,3,3.1,courtney.mills@company.com,Data Science,Python:3; Node.js:4; PHP:5,3,4.0
+EMP-321,Jeremy Dalton,Software Engineer,11,5.0,jeremy.dalton@company.com,Engineering,MongoDB:4; C++:4; JavaScript:3; SQL:5; C#:4; PHP:4; React:4; Django:5,8,4.1
+EMP-322,Elizabeth Oliver DDS,Backend Developer,14,4.8,elizabeth.oliver.dds@company.com,Product,SQL:4; MongoDB:3; TensorFlow:5; Pandas:5; Swift:4; R:4; Data Analysis:5; Kubernetes:5,8,4.4
+EMP-323,Theresa Clark,Full Stack Developer,12,4.5,theresa.clark@company.com,Product,Leadership:4; Machine Learning:4; Tableau:4; JavaScript:5; Ruby:4; Python:3; Azure:5; REST API:4,8,4.1
+EMP-324,Matthew Moore,Senior Software Engineer,1,2.9,matthew.moore@company.com,Design,JavaScript:4; C++:4; Problem Solving:2,3,3.3
+EMP-325,Benjamin Smith,Full Stack Developer,12,4.6,benjamin.smith@company.com,Data Science,Git:5; Scrum:4; Redis:4; Python:4; Communication:5; JavaScript:4; C#:4; PyTorch:5,8,4.4
+EMP-326,Kirk Carter,Data Scientist,11,4.1,kirk.carter@company.com,Product,HTML:3; React:4; Rust:5; Redis:5; Linux:4; CSS:5; Python:4; C#:5,8,4.4
+EMP-327,Michael Warner,UI/UX Designer,1,3.3,michael.warner@company.com,Product,Leadership:2; React:2; TensorFlow:3,3,2.3
+EMP-328,Michael Bradshaw,Frontend Developer,5,3.1,michael.bradshaw@company.com,Engineering,Redis:5; Rust:5; Spring:5; Ruby:4; Pandas:3,5,4.4
+EMP-329,Lori Guerrero,System Architect,13,4.6,lori.guerrero@company.com,Data Science,Redis:5; Microservices:3; PHP:4; Kubernetes:5; Agile:5; Swift:5; HTML:5; Django:4,8,4.5
+EMP-330,Jessica Stephens,Data Scientist,13,5.0,jessica.stephens@company.com,Engineering,Tableau:4; NumPy:5; Docker:4; Flask:4; CSS:5; Communication:5; Bash:4; GraphQL:5,8,4.5
+EMP-331,Susan Serrano,UI/UX Designer,8,4.1,susan.serrano@company.com,DevOps,Tableau:5; PostgreSQL:3; Spring:5; Pandas:5; Angular:5; Redis:5; JavaScript:5,7,4.7
+EMP-332,Christopher Parker,Frontend Developer,12,4.7,christopher.parker@company.com,Design,Python:4; Leadership:5; Communication:4; Data Analysis:4; Django:4; Rust:5; R:5; Swift:5,8,4.5
+EMP-333,Laura Roberts,Software Engineer,10,5.0,laura.roberts@company.com,Design,Machine Learning:4; Kubernetes:4; Ruby:5; Scrum:3; GCP:5; MongoDB:5; R:5; GraphQL:4,8,4.4
+EMP-334,Michael Lyons,Backend Developer,3,3.5,michael.lyons@company.com,Design,PostgreSQL:4; GCP:5; HTML:4; Vue.js:3; TensorFlow:3,5,3.8
+EMP-335,Kathryn Snyder,Backend Developer,13,5.0,kathryn.snyder@company.com,DevOps,Kubernetes:5; Ruby:5; Project Management:4; MongoDB:4; MySQL:5; GraphQL:5; Leadership:4; PHP:5,8,4.6
+EMP-336,Andrew Reynolds,DevOps Engineer,14,5.0,andrew.reynolds@company.com,Product,Data Analysis:5; Docker:4; Python:4; CSS:4; Git:5; Azure:5; React:5; Node.js:5,8,4.6
+EMP-337,David Davis,UI/UX Designer,5,3.6,david.davis@company.com,Engineering,C++:4; SQL:4; Pandas:3; CI/CD:4; GraphQL:3,5,3.6
+EMP-338,Sara Johnston,Frontend Developer,4,3.6,sara.johnston@company.com,Engineering,Go:5; MongoDB:4; PHP:5; Communication:4; Microservices:4,5,4.4
+EMP-339,Yvonne Chambers,Backend Developer,1,3.4,yvonne.chambers@company.com,Design,MongoDB:2; Jenkins:3; Agile:2,3,2.3
+EMP-340,Andrew Avila,Software Engineer,10,4.5,andrew.avila@company.com,Engineering,Linux:4; PHP:5; Kubernetes:4; GCP:5; Leadership:4; C#:4; Tableau:5; Flask:5,8,4.5
+EMP-341,Matthew Moon,Data Scientist,1,3.2,matthew.moon@company.com,Product,C++:3; SQL:2; React:2,3,2.3
+EMP-342,Kevin Walters,Frontend Developer,9,3.4,kevin.walters@company.com,Design,CSS:5; Angular:5; GraphQL:5; Node.js:5; Rust:5; Vue.js:3; SQL:4; Swift:4,8,4.5
+EMP-343,Brandon Bailey MD,Data Analyst,14,4.5,brandon.bailey.md@company.com,DevOps,AWS:4; C#:5; Agile:5; Git:5; Express.js:4; Communication:3; Problem Solving:5; Python:5,8,4.5
+EMP-344,Shannon Rivera,DevOps Engineer,6,3.8,shannon.rivera@company.com,Engineering,CI/CD:4; Tableau:3; GraphQL:4; GCP:4; HTML:3; Vue.js:4,6,3.7
+EMP-345,Donna Landry,Backend Developer,2,3.6,donna.landry@company.com,Design,Machine Learning:3; REST API:4; TensorFlow:4; R:3,4,3.5
+EMP-346,Krista Gibson,Senior Software Engineer,3,3.5,krista.gibson@company.com,Engineering,CI/CD:3; NumPy:4; Python:3; PostgreSQL:4,4,3.5
+EMP-347,Frank Cordova,System Architect,7,4.3,frank.cordova@company.com,Design,PHP:5; Project Management:5; GCP:5; SQL:5; Communication:4; GraphQL:4,6,4.7
+EMP-348,Jose Travis,Software Engineer,3,3.4,jose.travis@company.com,Data Science,R:3; Jenkins:1; GCP:3; Project Management:2; Machine Learning:3,5,2.4
+EMP-349,Kimberly Gutierrez,System Architect,14,4.7,kimberly.gutierrez@company.com,DevOps,Redis:5; C#:5; Pandas:5; Kubernetes:5; Bash:4; Tableau:5; PostgreSQL:4; PHP:5,8,4.8
+EMP-350,Isaiah Avila,UI/UX Designer,13,4.5,isaiah.avila@company.com,Engineering,Agile:4; Leadership:4; Node.js:5; Angular:5; REST API:5; TensorFlow:3; Kubernetes:5; Git:4,8,4.4
+EMP-351,Olivia Harris,Data Scientist,6,3.7,olivia.harris@company.com,Engineering,TensorFlow:4; Bash:4; Jenkins:4; GCP:4; Scrum:3; Redis:5; REST API:4,7,4.0
+EMP-352,Tanya Kim,Data Analyst,14,4.9,tanya.kim@company.com,Data Science,Spring:4; Swift:4; JavaScript:2; CSS:5; Angular:3; Jenkins:4; PostgreSQL:5; Tableau:5,8,4.0
+EMP-353,Barbara Dudley,System Architect,12,4.8,barbara.dudley@company.com,Engineering,MySQL:4; Rust:5; Node.js:5; REST API:5; Django:5; CSS:5; Bash:5; Vue.js:5,8,4.9
+EMP-354,Cynthia Moore,Full Stack Developer,2,3.2,cynthia.moore@company.com,Data Science,Docker:2; Angular:4; TensorFlow:2,3,2.7
+EMP-355,Kristen Davis,Software Engineer,7,3.7,kristen.davis@company.com,Data Science,Java:3; HTML:5; PHP:5; Linux:5; PostgreSQL:5; Node.js:5; Git:5; Angular:3,8,4.5
+EMP-356,Susan Murray MD,Full Stack Developer,13,5.0,susan.murray.md@company.com,Design,Jenkins:5; Tableau:5; Azure:4; React:5; JavaScript:5; Go:4; CI/CD:5; Kubernetes:5,8,4.8
+EMP-357,Kathleen Moran,DevOps Engineer,7,4.2,kathleen.moran@company.com,Design,Spring:5; MongoDB:3; Leadership:4; JavaScript:4; Django:4; NumPy:5; Rust:5,7,4.3
+EMP-358,Denise Davenport,Data Scientist,13,5.0,denise.davenport@company.com,DevOps,Vue.js:5; Pandas:4; Go:5; C#:5; Scrum:4; Microservices:4; Swift:3; Spring:5,8,4.4
+EMP-359,Mrs. Kristen Reyes,Frontend Developer,2,3.5,mrs..kristen.reyes@company.com,Engineering,PostgreSQL:2; GraphQL:5; Java:2,3,3.0
+EMP-360,Katie Suarez,Senior Software Engineer,13,4.9,katie.suarez@company.com,Data Science,Java:4; Redis:5; GraphQL:5; HTML:4; MongoDB:5; Python:3; SQL:4; Microservices:4,8,4.2
+EMP-361,Desiree Tyler,Project Manager,14,4.8,desiree.tyler@company.com,Product,MongoDB:5; Jenkins:4; Vue.js:5; Angular:3; Scrum:5; TensorFlow:5; R:3; Microservices:5,8,4.4
+EMP-362,Timothy Romero,System Architect,10,4.3,timothy.romero@company.com,Data Science,TensorFlow:5; Azure:4; Bash:5; Redis:5; REST API:4; Linux:4; Kubernetes:4; PHP:5,8,4.5
+EMP-363,Diane Evans,Software Engineer,1,3.6,diane.evans@company.com,Design,Communication:3; Python:3; Ruby:4,3,3.3
+EMP-364,Yvonne Burns,Software Engineer,9,4.5,yvonne.burns@company.com,Engineering,CSS:5; Bash:4; GCP:5; React:5; Kubernetes:5; Spring:4; Leadership:4; Project Management:5,8,4.6
+EMP-365,Joshua Reed,Data Analyst,13,4.7,joshua.reed@company.com,Data Science,Communication:5; Ruby:3; MongoDB:5; Kubernetes:4; Swift:4; Tableau:4; Bash:5; Project Management:3,8,4.1
+EMP-366,Kimberly Gibson,UI/UX Designer,13,4.9,kimberly.gibson@company.com,Data Science,Kubernetes:3; Linux:5; Java:4; React:5; Go:5; GCP:5; CI/CD:4; Agile:4,8,4.4
+EMP-367,Colin Terry,Product Manager,11,4.2,colin.terry@company.com,Data Science,Pandas:3; Leadership:4; Problem Solving:4; CI/CD:5; Git:5; Spring:4; SQL:4; MongoDB:5,8,4.2
+EMP-368,Cynthia Rowe,Data Analyst,14,4.8,cynthia.rowe@company.com,Data Science,GraphQL:5; Rust:3; NumPy:5; Docker:4; CI/CD:4; CSS:4; Bash:5; MongoDB:3,8,4.1
+EMP-369,Patrick Thornton,Project Manager,10,4.9,patrick.thornton@company.com,DevOps,MongoDB:4; C#:5; Ruby:4; Java:5; Redis:5; Jenkins:5; SQL:4; Bash:4,8,4.5
+EMP-370,Jasmin Alvarado,UI/UX Designer,4,3.4,jasmin.alvarado@company.com,Data Science,GraphQL:4; HTML:5; Data Analysis:5; SQL:3; Rust:4,5,4.2
+EMP-371,Veronica Simpson,Data Scientist,6,3.7,veronica.simpson@company.com,Data Science,PHP:3; Flask:5; CI/CD:4; Docker:5; TensorFlow:4,5,4.2
+EMP-372,Jonathan Lawrence,Backend Developer,4,3.8,jonathan.lawrence@company.com,Product,TensorFlow:4; NumPy:4; Agile:4; Kubernetes:3; Problem Solving:4; Project Management:3,6,3.7
+EMP-373,Shelly Alexander,Product Manager,11,4.5,shelly.alexander@company.com,Design,Vue.js:4; Problem Solving:5; CSS:5; R:5; C#:5; Bash:4; HTML:4; Linux:5,8,4.6
+EMP-374,Joyce Bowen,UI/UX Designer,14,5.0,joyce.bowen@company.com,Engineering,Machine Learning:5; Tableau:3; Vue.js:4; Project Management:5; Bash:5; CSS:5; Java:4; React:5,8,4.5
+EMP-375,Matthew Moore,Product Manager,3,3.7,matthew.moore@company.com,Product,MySQL:4; Ruby:4; Pandas:4,3,4.0
+EMP-376,Wayne Morgan,Frontend Developer,7,4.0,wayne.morgan@company.com,DevOps,Tableau:5; Problem Solving:5; REST API:5; PyTorch:4; Django:4; CSS:4; Microservices:5,7,4.6
+EMP-377,Marie Christian,Software Engineer,12,5.0,marie.christian@company.com,Product,CI/CD:5; Pandas:3; Communication:4; HTML:3; Data Analysis:3; Spring:5; Java:4; Flask:5,8,4.0
+EMP-378,Shannon James,UI/UX Designer,14,4.3,shannon.james@company.com,Product,GraphQL:4; C#:5; Git:5; Docker:5; REST API:5; Problem Solving:3; Go:4; CSS:4,8,4.4
+EMP-379,Nathan Malone,Data Analyst,14,4.8,nathan.malone@company.com,Data Science,PostgreSQL:5; C#:5; PHP:5; React:5; Data Analysis:5; PyTorch:4; Scrum:4; Communication:5,8,4.8
+EMP-380,Amanda Jones,System Architect,14,5.0,amanda.jones@company.com,Engineering,R:5; Scrum:4; Python:5; JavaScript:3; Project Management:5; Angular:4; Agile:3; C#:3,8,4.0
+EMP-381,Tammie Bright,System Architect,9,4.7,tammie.bright@company.com,Engineering,Tableau:3; Project Management:5; Git:4; React:4; Express.js:5; TensorFlow:4; Machine Learning:5; R:4,8,4.2
+EMP-382,Jessica Garcia,Product Manager,4,3.9,jessica.garcia@company.com,Design,REST API:5; PostgreSQL:4; GraphQL:4; React:4; HTML:4,5,4.2
+EMP-383,Shelia Wallace,Backend Developer,9,4.0,shelia.wallace@company.com,Data Science,Vue.js:5; Ruby:5; Linux:5; HTML:3; MySQL:5; Bash:3; Rust:5; Azure:4,8,4.4
+EMP-384,Stephanie Williams,Product Manager,3,3.5,stephanie.williams@company.com,Product,Machine Learning:5; Node.js:3; MySQL:4; Express.js:5,4,4.2
+EMP-385,Elaine Brooks,Data Analyst,6,3.9,elaine.brooks@company.com,Data Science,Communication:5; Java:4; SQL:4; TensorFlow:4; Scrum:5; Jenkins:4; Linux:4,7,4.3
+EMP-386,Joseph Knight,Data Scientist,5,4.0,joseph.knight@company.com,Design,PHP:3; Problem Solving:5; C++:5; Java:3; GCP:4,5,4.0
+EMP-387,Carolyn Miller,Senior Software Engineer,2,3.2,carolyn.miller@company.com,Data Science,Go:3; MongoDB:2; GCP:4,3,3.0
+EMP-388,Lisa Allen,Senior Software Engineer,13,4.7,lisa.allen@company.com,DevOps,Azure:4; GraphQL:4; Leadership:3; R:4; Machine Learning:5; GCP:4; Data Analysis:5; Java:4,8,4.1
+EMP-389,Briana Murray,Project Manager,11,4.6,briana.murray@company.com,Product,Java:4; Docker:5; Swift:4; Data Analysis:3; NumPy:5; PHP:5; MySQL:3; Spring:5,8,4.2
+EMP-390,David Smith,Product Manager,4,3.8,david.smith@company.com,Design,Agile:3; C#:4; Linux:4; PHP:3,4,3.5
+EMP-391,Stephanie Byrd,Backend Developer,2,3.0,stephanie.byrd@company.com,Engineering,Express.js:4; PyTorch:3; Jenkins:4; Azure:4,4,3.8
+EMP-392,Jeremy Reed,Full Stack Developer,2,2.9,jeremy.reed@company.com,Design,NumPy:2; Python:3; React:3,3,2.7
+EMP-393,Margaret Coleman,Full Stack Developer,11,4.9,margaret.coleman@company.com,Product,PostgreSQL:4; AWS:5; C++:5; Microservices:5; CSS:5; Git:4; Kubernetes:4; Linux:5,8,4.6
+EMP-394,Ryan Gonzalez,Software Engineer,9,4.6,ryan.gonzalez@company.com,Engineering,Linux:4; Azure:3; Project Management:5; Problem Solving:5; Docker:4; Kubernetes:5; Swift:3; GraphQL:5,8,4.2
+EMP-395,John Young,DevOps Engineer,12,4.8,john.young@company.com,Engineering,PHP:5; MongoDB:5; Swift:5; Problem Solving:4; Go:3; R:4; Ruby:5; Scrum:5,8,4.5
+EMP-396,Laura Haney,Frontend Developer,1,3.1,laura.haney@company.com,Product,C++:3; Linux:3; Kubernetes:3,3,3.0
+EMP-397,William Barrett,UI/UX Designer,1,2.8,william.barrett@company.com,Data Science,Kubernetes:3; Swift:3; Communication:4,3,3.3
+EMP-398,Keith Jennings,Data Analyst,1,3.1,keith.jennings@company.com,Engineering,PHP:5; Linux:4; Angular:2,3,3.7
+EMP-399,Amber Obrien,Software Engineer,4,3.2,amber.obrien@company.com,Design,CSS:3; SQL:4; JavaScript:4; Vue.js:4,4,3.8
