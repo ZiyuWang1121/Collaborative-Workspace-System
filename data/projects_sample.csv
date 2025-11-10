@@ -1,0 +1,4 @@
+id,name,description,required_skills
+"demo1","Website Analytics","Build dashboards for web traffic and conversion.","python, sql, data visualization"
+"demo2","Customer Churn Model","Train and deploy churn prediction model.","python, sklearn, ml"
+

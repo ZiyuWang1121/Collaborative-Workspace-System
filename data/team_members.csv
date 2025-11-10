@@ -1,0 +1,10 @@
+name,role,skills
+"Alex Johnson","Data Scientist","python, pandas, numpy, sklearn, nlp, matplotlib"
+"Jamie Smith","ML Engineer","python, tensorflow, pytorch, deep learning, ml, numpy"
+"Taylor Wu","Project Manager","project management, agile, planning, communication"
+"Jordan Lee","Data Analyst","sql, excel, pandas, data visualization, seaborn"
+"Casey Kim","Backend Developer","python, sql, cloud, aws"
+"Riley Chen","Analytics Engineer","sql, python, dbt, cloud, gcp"
+"Morgan Patel","BI Developer","sql, tableau, data visualization"
+"Sam Rivera","Full Stack Developer","python, javascript, cloud, azure"
+
