@@ -20,3 +20,10 @@ and staff profiles analysis.
 -  Group Project Presentation (10%)
 -  Program Coding (25%)
 -  Group project report (25%): no more than 4800 words (i.e. 1200 words per student).
+
+## Testing Instruction
+Please refer to the following steps to use this system:  
+1. Download all the files and make sure that the directories are in original order.
+2. Open your terminal and go to the correct directory.
+3. Use the command `streamlit run app.py` to activate the system.
+4. You can then input your own information or use the "Generate sample data" in the sidebar for demostration.
