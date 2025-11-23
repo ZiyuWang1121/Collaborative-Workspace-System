@@ -309,19 +309,17 @@ class ProjectManagementSystem:
             self._render_complete_step()
     
     def _render_project_select_action_step(self):
-        """Render the action selection step with Import/Export"""
+        """Render the action selection step with Import/Export and Quick Update"""
         st.subheader("1. Select Action")
         
-        # Single column layout: Add → Edit → Import/Export
+        # Single column layout: Add → Edit/Update → Import/Export
         st.markdown("### 🆕 Add New Project")
-        st.markdown("Create a brand new project from scratch")
         if st.button("Start New Project", use_container_width=True):
             self.start_project_workflow()
         
         st.divider()
         
-        st.markdown("### ✏️ Edit Existing Project")
-        st.markdown("Modify an existing project")
+        st.markdown("### ⚡ Manage Existing Project")
         
         if st.session_state.projects_data:
             # Add search and filter functionality
@@ -342,12 +340,47 @@ class ProjectManagementSystem:
             
             if filtered_projects:
                 project_options = [f"{p['project_id']} - {p['project_name']} ({p['status']})" for p in filtered_projects]
-                selected_project = st.selectbox("Select Project to Edit", project_options)
+                selected_project_str = st.selectbox("Select Project to Manage", project_options)
                 
-                if st.button("Edit Selected Project", use_container_width=True):
-                    project_id = selected_project.split(" - ")[0]
-                    self.start_project_workflow(project_id)
-                
+                # --- NEW: Quick Action Area (Vertical Layout) ---
+                if selected_project_str:
+                    project_id = selected_project_str.split(" - ")[0]
+                    # Find the project object directly
+                    project_idx = next((i for i, p in enumerate(st.session_state.projects_data) if p['project_id'] == project_id), -1)
+                    
+                    if project_idx != -1:
+                        project = st.session_state.projects_data[project_idx]
+                        
+                        with st.container(border=True):
+                            st.markdown(f"**Selected:** {project['project_name']}")
+                            
+                            # --- 1. Full Edit Section ---
+                            st.markdown("#### 📝 Detail Edit")
+                            st.caption("Modify project details, team, and skills.")
+                            if st.button("Edit Full Details", use_container_width=True, key=f"btn_edit_{project_id}"):
+                                self.start_project_workflow(project_id)
+                            
+                            
+                            # --- 2. Quick Status Update Section ---
+                            st.markdown("#### 🚀 Quick Status Update")
+                            status_options = ['Not Started', 'In Progress', 'Completed', 'On Hold']
+                            current_status = project.get('status', 'Not Started')
+                            if current_status not in status_options: status_options.append(current_status)
+                            
+                            new_status = st.selectbox("Update Status:", status_options, 
+                                                    index=status_options.index(current_status),
+                                                    key=f"quick_status_{project_id}")
+                            
+                            if st.button("Confirm Status Update", use_container_width=True, key=f"btn_upd_{project_id}"):
+                                if new_status != current_status:
+                                    # Direct Update
+                                    st.session_state.projects_data[project_idx]['status'] = new_status
+                                    self.add_notification(f"Project {project_id} status updated to {new_status}", "info", project_id)
+                                    st.success(f"Updated to {new_status}!")
+                                    st.rerun()
+                                else:
+                                    st.info("Status is already set to this value.")
+
                 st.info(f"Found {len(filtered_projects)} project(s)")
             else:
                 st.warning("No projects found matching your criteria")
@@ -365,7 +398,6 @@ class ProjectManagementSystem:
         with col_export:
             st.write("**Export Project Data**")
             if st.session_state.projects_data:
-                # Convert to DataFrame
                 df_export = pd.DataFrame(st.session_state.projects_data)
                 csv_data = df_export.to_csv(index=False).encode('utf-8')
                 
@@ -390,31 +422,20 @@ class ProjectManagementSystem:
                     st.dataframe(df_import.head(3), height=100, use_container_width=True)
                     
                     if st.button("Confirm Project Import", use_container_width=True):
-                        # Get existing IDs to prevent duplicates
                         _, project_ids, _ = self.get_existing_ids()
                         new_projects_added = 0
                         
-                        # Convert DataFrame to dictionary list
                         for record in df_import.to_dict('records'):
-                            # Validation: Must have project_id
-                            if 'project_id' not in record or not record['project_id']:
-                                continue
+                            if 'project_id' not in record or not record['project_id']: continue
+                            if record['project_id'] in project_ids: continue
                                 
-                            # Skip if project ID already exists
-                            if record['project_id'] in project_ids:
-                                continue
-                                
-                            # Data Cleaning & Defaults
                             record.setdefault('status', 'Not Started')
                             record.setdefault('manager_id', 'To be assigned')
                             record.setdefault('Priority', 'Medium')
                             record.setdefault('Complexity_Score', 5)
                             
-                            # Critical processing: try to restore assigned_team from string to list
-                            # CSV readout might be "['E001']" (String), we need List
                             if 'assigned_team' in record and isinstance(record['assigned_team'], str):
                                 try:
-                                    # Simple safe conversion if it looks like a list string
                                     if record['assigned_team'].startswith('[') and record['assigned_team'].endswith(']'):
                                         import ast
                                         record['assigned_team'] = ast.literal_eval(record['assigned_team'])
@@ -425,16 +446,15 @@ class ProjectManagementSystem:
                             elif 'assigned_team' not in record or not isinstance(record['assigned_team'], list):
                                 record['assigned_team'] = []
     
-                            # Append to session state
                             st.session_state.projects_data.append(record)
-                            project_ids.append(record['project_id']) # Update local list
+                            project_ids.append(record['project_id'])
                             new_projects_added += 1
                         
                         if new_projects_added > 0:
                             st.success(f"Successfully imported {new_projects_added} new projects!")
                             st.rerun()
                         else:
-                            st.warning("No new projects imported. Check for duplicate IDs or invalid format.")
+                            st.warning("No new projects imported. Check for duplicate IDs.")
                             
                 except Exception as e:
                     st.error(f"Failed to import file: {e}")
@@ -747,7 +767,7 @@ class ProjectManagementSystem:
                 self._cancel_project_workflow()
         
         with col3:
-            if st.button("🚀 Create Project", type="primary"):
+            if st.button("🚀 Confirm", type="primary"):
                 # Save to projects data
                 project_id = self._save_project_data(project_data, is_draft=False)
                 if project_id:
@@ -781,7 +801,7 @@ class ProjectManagementSystem:
         
         project_data = st.session_state.project_form_data
         
-        st.success(f"Project **{project_data.get('project_name')}** has been successfully created!")
+        st.success(f"Project **{project_data.get('project_name')}** has been successfully created/updated!")
         
         col1, col2 = st.columns(2)
         
@@ -797,10 +817,6 @@ class ProjectManagementSystem:
         with col2:
             st.markdown("### Quick Action")
             if st.button("🆕 Create/Edit Another Project"):
-                self.complete_project_workflow()
-                st.rerun()
-            
-            if st.button("🏠 Return to Dashboard"):
                 self.complete_project_workflow()
                 st.rerun()
 
@@ -883,19 +899,17 @@ class ProjectManagementSystem:
             self._render_task_complete_step()
     
     def _render_task_select_action_step(self):
-        """Render the task action selection step"""
+        """Render the task action selection step with Import/Export and Quick Update"""
         st.subheader("1. Select Action")
         
-        # Single column layout: Add → Edit → Import/Export
+        # Single column layout: Add → Edit/Update → Import/Export
         st.markdown("### 🆕 Add New Task")
-        st.markdown("Create a brand new task from scratch")
         if st.button("Start New Task", use_container_width=True):
             self.start_task_workflow()
         
         st.divider()
         
-        st.markdown("### ✏️ Edit Existing Task")
-        st.markdown("Modify an existing task")
+        st.markdown("### ⚡ Manage Existing Task")
         
         if st.session_state.tasks_data:
             # Add search and filter functionality
@@ -921,13 +935,46 @@ class ProjectManagementSystem:
                 filtered_tasks = [t for t in filtered_tasks if t['project_id'] == project_filter]
             
             if filtered_tasks:
-                task_options = [f"{t['task_id']} - {t['task_name']} ({t['status']}) - {t['project_id']}" for t in filtered_tasks]
-                selected_task = st.selectbox("Select Task to Edit", task_options)
+                task_options = [f"{t['task_id']} - {t['task_name']} ({t['status']})" for t in filtered_tasks]
+                selected_task_str = st.selectbox("Select Task to Manage", task_options)
                 
-                if st.button("Edit Selected Task", use_container_width=True):
-                    task_id = selected_task.split(" - ")[0]
-                    self.start_task_workflow(task_id)
-                
+                # --- NEW: Quick Action Area (Vertical Layout) ---
+                if selected_task_str:
+                    task_id = selected_task_str.split(" - ")[0]
+                    task_idx = next((i for i, t in enumerate(st.session_state.tasks_data) if t['task_id'] == task_id), -1)
+                    
+                    if task_idx != -1:
+                        task = st.session_state.tasks_data[task_idx]
+                        
+                        with st.container(border=True):
+                            st.markdown(f"**Selected:** {task['task_name']}")
+                            
+                            # --- 1. Full Edit Section ---
+                            st.markdown("#### 📝 Detail Edit")
+                            st.caption("Edit description, assignment, and estimates.")
+                            if st.button("Edit Full Details", use_container_width=True, key=f"btn_edit_task_{task_id}"):
+                                self.start_task_workflow(task_id)
+                            
+                            # --- 2. Quick Status Update Section ---
+                            st.markdown("#### 🚀 Quick Status Update")
+                            status_options = ['Unassigned', 'Assigned', 'In Progress', 'Completed', 'Blocked']
+                            current_status = task.get('status', 'Unassigned')
+                            if current_status not in status_options: status_options.append(current_status)
+                            
+                            new_status = st.selectbox("Update Status:", status_options, 
+                                                    index=status_options.index(current_status),
+                                                    key=f"quick_status_task_{task_id}")
+                            
+                            if st.button("Confirm Status Update", use_container_width=True, key=f"btn_upd_task_{task_id}"):
+                                if new_status != current_status:
+                                    # Direct Update
+                                    st.session_state.tasks_data[task_idx]['status'] = new_status
+                                    self.add_notification(f"Task {task_id} status updated to {new_status}", "info", task.get('project_id'), task_id)
+                                    st.success(f"Updated to {new_status}!")
+                                    st.rerun()
+                                else:
+                                    st.info("Status is already set to this value.")
+
                 st.info(f"Found {len(filtered_tasks)} task(s)")
             else:
                 st.warning("No tasks found matching your criteria")
@@ -969,38 +1016,29 @@ class ProjectManagementSystem:
                     st.dataframe(df_import.head(3), height=100, use_container_width=True)
                     
                     if st.button("Confirm Task Import", use_container_width=True):
-                        # Get existing IDs to prevent duplicates
                         _, _, task_ids = self.get_existing_ids()
                         new_tasks_added = 0
                         
-                        # Convert DataFrame to dictionary list
                         for record in df_import.to_dict('records'):
-                            # Validation: Must have task_id
-                            if 'task_id' not in record or not record['task_id']:
-                                continue
+                            if 'task_id' not in record or not record['task_id']: continue
+                            if record['task_id'] in task_ids: continue
                                 
-                            # Skip if task ID already exists
-                            if record['task_id'] in task_ids:
-                                continue
-                                
-                            # Data Cleaning & Defaults
                             record.setdefault('status', 'Unassigned')
                             record.setdefault('category', 'Other')
                             record.setdefault('complexity', 3)
                             record.setdefault('estimated_duration', 5)
                             record.setdefault('estimated_budget', 1000)
-                            record.setdefault('start_date', datetime.now().strftime('%Y-%m-%d'))  # Add default start_date
+                            record.setdefault('start_date', datetime.now().strftime('%Y-%m-%d'))
                             
-                            # Append to session state
                             st.session_state.tasks_data.append(record)
-                            task_ids.append(record['task_id']) # Update local list
+                            task_ids.append(record['task_id'])
                             new_tasks_added += 1
                         
                         if new_tasks_added > 0:
                             st.success(f"Successfully imported {new_tasks_added} new tasks!")
                             st.rerun()
                         else:
-                            st.warning("No new tasks imported. Check for duplicate IDs or invalid format.")
+                            st.warning("No new tasks imported. Check for duplicate IDs.")
                             
                 except Exception as e:
                     st.error(f"Failed to import file: {e}")
@@ -1272,7 +1310,7 @@ class ProjectManagementSystem:
                 self._cancel_task_workflow()
         
         with col3:
-            if st.button("🚀 Create Task", type="primary"):
+            if st.button("🚀 Confirm", type="primary"):
                 # Save to tasks data
                 task_id = self._save_task_data(task_data)
                 if task_id:
@@ -1304,7 +1342,7 @@ class ProjectManagementSystem:
         
         task_data = st.session_state.task_form_data
         
-        st.success(f"Task **{task_data.get('task_name')}** has been successfully created!")
+        st.success(f"Task **{task_data.get('task_name')}** has been successfully created/updated!")
         
         col1, col2 = st.columns(2)
         
@@ -1749,619 +1787,770 @@ class ProjectManagementSystem:
                     st.error(f"Failed to import file: {e}")
 
     def render_analytics_reports(self):
-        """Render Analytics & Reports Tab"""
-        st.header("📊 Analytics & Reports")
-        
-        if not st.session_state.projects_data and not st.session_state.tasks_data and not st.session_state.employees_data:
-            st.info("No data available to generate analytics. Please add employees, projects, and tasks.")
-            return
-        
-        # Part 1: Project Analysis
-        st.subheader("📋 Project Analysis")
-        
-        if st.session_state.projects_data:
-            # Project filters
-            col1, col2 = st.columns(2)
+            """Render Analytics & Reports Tab"""
+            st.header("📊 Analytics & Reports")
             
-            with col1:
-                project_status_filter = st.multiselect(
-                    "Filter by Status:",
-                    options=list(set(p['status'] for p in st.session_state.projects_data)),
-                    default=list(set(p['status'] for p in st.session_state.projects_data)),
-                    key="project_status_filter"
-                )
+            if not st.session_state.projects_data and not st.session_state.tasks_data and not st.session_state.employees_data:
+                st.info("No data available to generate analytics. Please add employees, projects, and tasks.")
+                return
             
-            with col2:
-                project_priority_filter = st.multiselect(
-                    "Filter by Priority:",
-                    options=list(set(p['Priority'] for p in st.session_state.projects_data)),
-                    default=list(set(p['Priority'] for p in st.session_state.projects_data)),
-                    key="project_priority_filter"
-                )
+            # Part 1: Project Analysis
+            st.subheader("📋 Project Analysis")
             
-            # Filter projects
-            filtered_projects = [p for p in st.session_state.projects_data 
-                               if p['status'] in project_status_filter 
-                               and p['Priority'] in project_priority_filter]
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                # Project status distribution
-                st.markdown("**Status Distribution**")
-                if filtered_projects:
-                    status_counts = pd.Series([p['status'] for p in filtered_projects]).value_counts().reset_index()
-                    status_counts.columns = ['Status', 'Count']
-                    
-                    fig_status = px.pie(
-                        status_counts, 
-                        values='Count', 
-                        names='Status',
-                        color_discrete_sequence=px.colors.qualitative.Set3,
-                        hover_data=['Count']
-                    )
-                    fig_status.update_traces(
-                        textposition='inside', 
-                        textinfo='percent+label',
-                        hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
-                    )
-                    st.plotly_chart(fig_status, use_container_width=True)
-                else:
-                    st.info("No projects match the filters")
-            
-            with col2:
-                # Project priority distribution
-                st.markdown("**Priority Distribution**")
-                if filtered_projects:
-                    priority_counts = pd.Series([p['Priority'] for p in filtered_projects]).value_counts().reset_index()
-                    priority_counts.columns = ['Priority', 'Count']
-                    
-                    fig_priority = px.pie(
-                        priority_counts, 
-                        values='Count', 
-                        names='Priority',
-                        color_discrete_sequence=px.colors.qualitative.Pastel,
-                        hover_data=['Count']
-                    )
-                    fig_priority.update_traces(
-                        textposition='inside', 
-                        textinfo='percent+label',
-                        hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
-                    )
-                    st.plotly_chart(fig_priority, use_container_width=True)
-                else:
-                    st.info("No projects match the filters")
-            
-            # Display project filter statistics
-            if filtered_projects:
-                st.info(f"Showing {len(filtered_projects)} out of {len(st.session_state.projects_data)} projects")
-        
-        # Project Gantt chart
-        if st.session_state.projects_data:
-            st.markdown("**Project Timeline**")
-            
-            # Project Gantt chart filters - start time on far left
-            col1, col2, col3, col4 = st.columns(4)
-            
-            with col1:
-                # Get date range for all projects
-                all_start_dates = [datetime.strptime(p['start_date'], '%Y-%m-%d') for p in st.session_state.projects_data]
-                all_end_dates = [datetime.strptime(p['deadline'], '%Y-%m-%d') for p in st.session_state.projects_data]
-                min_date = min(all_start_dates)
-                max_date = max(all_end_dates)
-                
-                project_start_from = st.date_input(
-                    "Start Date From:",
-                    value=min_date,
-                    min_value=min_date,
-                    max_value=max_date,
-                    key="project_start_from"
-                )
-            
-            with col2:
-                project_start_to = st.date_input(
-                    "Start Date To:",
-                    value=max_date,
-                    min_value=min_date,
-                    max_value=max_date,
-                    key="project_start_to"
-                )
-            
-            with col3:
-                gantt_status_filter = st.multiselect(
-                    "Filter by Status:",
-                    options=list(set(p['status'] for p in st.session_state.projects_data)),
-                    default=list(set(p['status'] for p in st.session_state.projects_data)),
-                    key="project_status_gantt_filter"
-                )
-            
-            with col4:
-                gantt_priority_filter = st.multiselect(
-                    "Filter by Priority:",
-                    options=list(set(p['Priority'] for p in st.session_state.projects_data)),
-                    default=list(set(p['Priority'] for p in st.session_state.projects_data)),
-                    key="project_priority_gantt_filter"
-                )
-            
-            # Filter projects
-            filtered_gantt_projects = []
-            for project in st.session_state.projects_data:
-                project_start = datetime.strptime(project['start_date'], '%Y-%m-%d')
-                project_status = project['status']
-                project_priority = project['Priority']
-                
-                if (project_start.date() >= project_start_from and
-                    project_start.date() <= project_start_to and
-                    project_status in gantt_status_filter and
-                    project_priority in gantt_priority_filter):
-                    filtered_gantt_projects.append(project)
-            
-            if filtered_gantt_projects:
-                # Create project Gantt chart data
-                project_gantt_data = []
-                for project in filtered_gantt_projects:
-                    progress = self.calculate_project_progress(project['project_id'])
-                    start_date = datetime.strptime(project['start_date'], '%Y-%m-%d')
-                    end_date = datetime.strptime(project['deadline'], '%Y-%m-%d')
-                    duration_days = (end_date - start_date).days
-                    
-                    project_gantt_data.append({
-                        'Task': f"{project['project_id']} - {project['project_name']}",
-                        'Start': project['start_date'],
-                        'Finish': project['deadline'],
-                        'Status': project['status'],
-                        'Priority': project['Priority'],
-                        'Progress': progress,
-                        'Duration_Days': duration_days,
-                        'Team_Size': len(project.get('assigned_team', [])),
-                        'Complexity': project['Complexity_Score']
-                    })
-                
-                project_gantt_df = pd.DataFrame(project_gantt_data)
-                
-                # Create project Gantt chart
-                fig_project_gantt = px.timeline(
-                    project_gantt_df,
-                    x_start="Start",
-                    x_end="Finish",
-                    y="Task",
-                    color="Status",
-                    hover_data=["Priority", "Progress", "Duration_Days", "Team_Size", "Complexity"],
-                    color_discrete_sequence=px.colors.qualitative.Set2
-                )
-                
-                fig_project_gantt.update_traces(
-                    hovertemplate=(
-                        "<b>%{y}</b><br>"
-                        "Duration: %{customdata[2]} days<br>"
-                        "Progress: %{customdata[1]}%<br>"
-                        "Priority: %{customdata[0]}<br>"
-                        "Team Size: %{customdata[3]}<br>"
-                        "Complexity: %{customdata[4]}/10<br>"
-                        "Start: %{x|%Y-%m-%d}<br>"
-                        "End: %{x_end|%Y-%m-%d}"
-                    )
-                )
-                
-                fig_project_gantt.update_yaxes(autorange="reversed")
-                fig_project_gantt.update_layout(
-                    height=400,
-                    xaxis_title="Timeline",
-                    yaxis_title="Projects",
-                    showlegend=True
-                )
-                
-                st.plotly_chart(fig_project_gantt, use_container_width=True)
-                
-                # Display time range statistics
-                st.info(f"Showing {len(filtered_gantt_projects)} projects with start dates from {project_start_from} to {project_start_to}")
-            else:
-                st.warning("No projects match the selected filters.")
-        
-        # Part 2: Task Analysis
-        st.subheader("✅ Task Analysis")
-        
-        if st.session_state.tasks_data:
-            # Task filters
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                task_status_filter = st.multiselect(
-                    "Filter by Status:",
-                    options=list(set(t['status'] for t in st.session_state.tasks_data)),
-                    default=list(set(t['status'] for t in st.session_state.tasks_data)),
-                    key="task_status_filter"
-                )
-            
-            with col2:
-                task_category_filter = st.multiselect(
-                    "Filter by Category:",
-                    options=list(set(t['category'] for t in st.session_state.tasks_data)),
-                    default=list(set(t['category'] for t in st.session_state.tasks_data)),
-                    key="task_category_filter"
-                )
-            
-            # Filter tasks
-            filtered_tasks = [t for t in st.session_state.tasks_data 
-                             if t['status'] in task_status_filter 
-                             and t['category'] in task_category_filter]
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                # Task status distribution
-                st.markdown("**Status Distribution**")
-                if filtered_tasks:
-                    task_status_counts = pd.Series([t['status'] for t in filtered_tasks]).value_counts().reset_index()
-                    task_status_counts.columns = ['Status', 'Count']
-                    
-                    fig_task_status = px.pie(
-                        task_status_counts,
-                        values='Count',
-                        names='Status',
-                        color_discrete_sequence=px.colors.qualitative.Set3,
-                        hover_data=['Count']
-                    )
-                    fig_task_status.update_traces(
-                        textposition='inside',
-                        textinfo='percent+label',
-                        hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
-                    )
-                    st.plotly_chart(fig_task_status, use_container_width=True)
-                else:
-                    st.info("No tasks match the filters")
-            
-            with col2:
-                # Task priority distribution
-                st.markdown("**Priority Distribution**")
-                if filtered_tasks:
-                    task_priority_data = []
-                    for task in filtered_tasks:
-                        # Assign priority to tasks (based on complexity and duration)
-                        complexity = task.get('complexity', 3)
-                        duration = task.get('estimated_duration', 7)
-                        
-                        # Simple priority calculation logic
-                        if complexity >= 4 or duration >= 14:
-                            priority = 'High'
-                        elif complexity >= 3 or duration >= 7:
-                            priority = 'Medium'
-                        else:
-                            priority = 'Low'
-                        
-                        task_priority_data.append({
-                            'Priority': priority,
-                            'Status': task['status']
-                        })
-                    
-                    task_priority_df = pd.DataFrame(task_priority_data)
-                    priority_counts = task_priority_df['Priority'].value_counts().reset_index()
-                    priority_counts.columns = ['Priority', 'Count']
-                    
-                    fig_task_priority = px.pie(
-                        priority_counts,
-                        values='Count',
-                        names='Priority',
-                        color_discrete_sequence=px.colors.qualitative.Pastel,
-                        hover_data=['Count']
-                    )
-                    fig_task_priority.update_traces(
-                        textposition='inside',
-                        textinfo='percent+label',
-                        hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
-                    )
-                    st.plotly_chart(fig_task_priority, use_container_width=True)
-                else:
-                    st.info("No tasks match the filters")
-            
-            # Display task filter statistics
-            if filtered_tasks:
-                st.info(f"Showing {len(filtered_tasks)} out of {len(st.session_state.tasks_data)} tasks")
-        
-        # Task Gantt chart
-        if st.session_state.tasks_data:
-            st.markdown("**Task Timeline**")
-            
-            # Task Gantt chart filters - start time on far left
-            col1, col2, col3, col4 = st.columns(4)
-            
-            with col1:
-                # Task start time filter
-                task_start_dates = []
-                for task in st.session_state.tasks_data:
-                    created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
-                    if ' ' in created_date:
-                        start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d')
-                    else:
-                        start_date = datetime.strptime(created_date, '%Y-%m-%d')
-                    task_start_dates.append(start_date)
-                
-                if task_start_dates:
-                    min_task_start = min(task_start_dates)
-                    max_task_start = max(task_start_dates)
-                    
-                    task_start_from = st.date_input(
-                        "Start Date From:",
-                        value=min_task_start,
-                        min_value=min_task_start,
-                        max_value=max_task_start,
-                        key="task_start_from"
-                    )
-                else:
-                    task_start_from = datetime.now().date()
-            
-            with col2:
-                if task_start_dates:
-                    task_start_to = st.date_input(
-                        "Start Date To:",
-                        value=max_task_start,
-                        min_value=min_task_start,
-                        max_value=max_task_start,
-                        key="task_start_to"
-                    )
-                else:
-                    task_start_to = datetime.now().date()
-            
-            with col3:
-                # Filter tasks by project
-                project_options = ["All Projects"] + [p['project_id'] for p in st.session_state.projects_data]
-                selected_project = st.selectbox(
-                    "Filter by Project:",
-                    options=project_options,
-                    key="task_project_filter"
-                )
-            
-            with col4:
-                task_gantt_status_filter = st.multiselect(
-                    "Filter by Status:",
-                    options=list(set(t['status'] for t in st.session_state.tasks_data)),
-                    default=list(set(t['status'] for t in st.session_state.tasks_data)),
-                    key="task_status_gantt_filter"
-                )
-            
-            # Filter tasks
-            filtered_gantt_tasks = []
-            for task in st.session_state.tasks_data:
-                task_status = task['status']
-                task_project = task.get('project_id')
-                
-                # Get task start date
-                created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
-                if ' ' in created_date:
-                    task_start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d')
-                else:
-                    task_start_date = datetime.strptime(created_date, '%Y-%m-%d')
-                
-                # Apply filter conditions
-                project_match = (selected_project == "All Projects" or task_project == selected_project)
-                status_match = task_status in task_gantt_status_filter
-                start_date_match = (task_start_date.date() >= task_start_from and 
-                                  task_start_date.date() <= task_start_to)
-                
-                if project_match and status_match and start_date_match:
-                    filtered_gantt_tasks.append(task)
-            
-            if filtered_gantt_tasks:
-                # Create task Gantt chart data
-                task_gantt_data = []
-                for task in filtered_gantt_tasks:
-                    task_deadline = task.get('deadline')
-                    created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
-                    
-                    # Calculate start date (creation date or duration-based estimate)
-                    start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d') if ' ' in created_date else datetime.strptime(created_date, '%Y-%m-%d')
-                    
-                    if task_deadline:
-                        end_date = datetime.strptime(task_deadline, '%Y-%m-%d')
-                        duration_days = (end_date - start_date).days
-                    else:
-                        end_date = start_date + timedelta(days=task.get('estimated_duration', 7))
-                        duration_days = task.get('estimated_duration', 7)
-                    
-                    task_gantt_data.append({
-                        'Task': f"{task['task_id']} - {task['task_name']}",
-                        'Start': start_date.strftime('%Y-%m-%d'),
-                        'Finish': end_date.strftime('%Y-%m-%d'),
-                        'Status': task['status'],
-                        'Category': task.get('category', 'Other'),
-                        'Project': task.get('project_id', 'Unknown'),
-                        'Duration_Days': duration_days,
-                        'Complexity': task.get('complexity', 3),
-                        'Assigned_To': task.get('assigned_to_name', 'Unassigned')
-                    })
-                
-                task_gantt_df = pd.DataFrame(task_gantt_data)
-                
-                # Create task Gantt chart
-                fig_task_gantt = px.timeline(
-                    task_gantt_df,
-                    x_start="Start",
-                    x_end="Finish",
-                    y="Task",
-                    color="Status",
-                    hover_data=["Category", "Project", "Duration_Days", "Complexity", "Assigned_To"],
-                    color_discrete_sequence=px.colors.qualitative.Set3
-                )
-                
-                fig_task_gantt.update_traces(
-                    hovertemplate=(
-                        "<b>%{y}</b><br>"
-                        "Project: %{customdata[1]}<br>"
-                        "Category: %{customdata[0]}<br>"
-                        "Duration: %{customdata[2]} days<br>"
-                        "Complexity: %{customdata[3]}/5<br>"
-                        "Assigned To: %{customdata[4]}<br>"
-                        "Start: %{x|%Y-%m-%d}<br>"
-                        "End: %{x_end|%Y-%m-%d}"
-                    )
-                )
-                
-                fig_task_gantt.update_yaxes(autorange="reversed")
-                fig_task_gantt.update_layout(
-                    height=400,
-                    xaxis_title="Timeline",
-                    yaxis_title="Tasks",
-                    showlegend=True
-                )
-                
-                st.plotly_chart(fig_task_gantt, use_container_width=True)
-                
-                # Display time range statistics
-                st.info(f"Showing {len(filtered_gantt_tasks)} tasks with start dates from {task_start_from} to {task_start_to}")
-            else:
-                st.warning("No tasks match the selected filters.")
-        
-            # Part 3: Team & Performance Analysis
-            st.subheader("👥 Team & Performance Analysis")
-            
-            if st.session_state.employees_data:
-                # Add department filter
-                col1, = st.columns(1)
-                
-                with col1:
-                    dept_filter = st.multiselect(
-                        "Filter by Department:",
-                        options=list(set(e['department'] for e in st.session_state.employees_data)),
-                        default=list(set(e['department'] for e in st.session_state.employees_data)),
-                        key="employee_dept_filter"
-                    )
-                
-                # Initialize variables
-                filtered_employees = []
-                filtered_employee_df = pd.DataFrame()
-                
-                # Check if departments are selected
-                if not dept_filter:
-                    st.warning("Please select at least one department to view employee data.")
-                else:
-                    # Only show table when departments are selected
-                    st.markdown("**Employee Overview**")
-                    employee_df = pd.DataFrame(st.session_state.employees_data)
-                    
-                    # Filter employees
-                    filtered_employees = [e for e in st.session_state.employees_data 
-                                        if e['department'] in dept_filter]
-                    
-                    filtered_employee_df = pd.DataFrame(filtered_employees)
-                
-                # Handle data display uniformly outside conditional statement
-                if not filtered_employee_df.empty:
-                    # Display employee data table
-                    st.dataframe(
-                        filtered_employee_df[['employee_id', 'name', 'job_title', 'department', 
-                                           'experience_years', 'performance_rating', 'total_skills', 'avg_proficiency']],
-                        use_container_width=True,
-                        height=300
-                    )
-                else:
-                    # Handle empty data case
-                    st.info("No employee data to display.")
-                
-                # Team analysis charts
+            if st.session_state.projects_data:
+                # Project filters
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    # Department distribution pie chart
-                    st.markdown("**Department Distribution**")
-                    if filtered_employees:  # This variable is now always defined
-                        dept_counts = pd.Series([e['department'] for e in filtered_employees]).value_counts().reset_index()
-                        dept_counts.columns = ['Department', 'Count']
-                        
-                        fig_dept = px.pie(
-                            dept_counts,
-                            values='Count',
-                            names='Department',
-                            color_discrete_sequence=px.colors.qualitative.Bold
-                        )
-                        fig_dept.update_traces(
-                            textposition='inside',
-                            textinfo='percent+label',
-                            hovertemplate="<b>%{label}</b><br>Employees: %{value}<extra></extra>"
-                        )
-                        st.plotly_chart(fig_dept, use_container_width=True)
-                    else:
-                        st.info("No employees match the filters")
-                    
-                    # Experience distribution histogram (with edge lines)
-                    if filtered_employees:  # This variable is now always defined
-                        st.markdown("**Experience Distribution**")
-                        fig_exp_hist = px.histogram(
-                            filtered_employee_df,
-                            x='experience_years',
-                            nbins=10,
-                            color_discrete_sequence=['#636EFA'],
-                            opacity=0.8
-                        )
-                        fig_exp_hist.update_traces(
-                            marker_line_color='black',  # Add black edge lines
-                            marker_line_width=1.5,      # Edge line width
-                            opacity=0.8                 # Slightly transparent to show edges
-                        )
-                        fig_exp_hist.update_layout(
-                            xaxis_title="Experience (Years)",
-                            yaxis_title="Number of Employees",
-                            bargap=0.1  # Set gap between bars
-                        )
-                        st.plotly_chart(fig_exp_hist, use_container_width=True)
+                    project_status_filter = st.multiselect(
+                        "Filter by Status:",
+                        options=list(set(p['status'] for p in st.session_state.projects_data)),
+                        default=list(set(p['status'] for p in st.session_state.projects_data)),
+                        key="project_status_filter"
+                    )
                 
                 with col2:
-                    # Performance rating box plot
-                    st.markdown("**Performance Rating by Department**")
-                    if filtered_employees:  # This variable is now always defined
-                        fig_perf_box = px.box(
-                            filtered_employee_df,
-                            x='department',
-                            y='performance_rating',
-                            color='department',
-                            points="all",
-                            hover_data=['name', 'job_title']
-                        )
-                        fig_perf_box.update_layout(
-                            xaxis_title="Department",
-                            yaxis_title="Performance Rating (1-5)"
-                        )
-                        st.plotly_chart(fig_perf_box, use_container_width=True)
-                    else:
-                        st.info("No employees match the filters")
-                    
-                    # Skills vs performance relationship
-                    if filtered_employees:  # This variable is now always defined
-                        st.markdown("**Skills vs Performance**")
-                        fig_skills_perf = px.scatter(
-                            filtered_employee_df,
-                            x='total_skills',
-                            y='performance_rating',
-                            size='experience_years',
-                            color='department',
-                            hover_data=['name', 'job_title', 'avg_proficiency'],
-                            size_max=20
-                        )
-                        fig_skills_perf.update_layout(
-                            xaxis_title="Number of Skills",
-                            yaxis_title="Performance Rating"
-                        )
-                        st.plotly_chart(fig_skills_perf, use_container_width=True)
+                    project_priority_filter = st.multiselect(
+                        "Filter by Priority:",
+                        options=list(set(p['Priority'] for p in st.session_state.projects_data)),
+                        default=list(set(p['Priority'] for p in st.session_state.projects_data)),
+                        key="project_priority_filter"
+                    )
                 
-                # Team statistics summary
-                if filtered_employees:
-                    st.markdown("**Team Statistics Summary**")
-                    stat_col1, stat_col2, stat_col3, stat_col4 = st.columns(4)
+                # Filter projects
+                filtered_projects = [p for p in st.session_state.projects_data 
+                                   if p['status'] in project_status_filter 
+                                   and p['Priority'] in project_priority_filter]
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    # Project status distribution
+                    st.markdown("**Status Distribution**")
+                    if filtered_projects:
+                        status_counts = pd.Series([p['status'] for p in filtered_projects]).value_counts().reset_index()
+                        status_counts.columns = ['Status', 'Count']
+                        
+                        fig_status = px.pie(
+                            status_counts, 
+                            values='Count', 
+                            names='Status',
+                            color_discrete_sequence=px.colors.qualitative.Set3,
+                            hover_data=['Count']
+                        )
+                        fig_status.update_traces(
+                            textposition='inside', 
+                            textinfo='percent+label',
+                            hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
+                        )
+                        st.plotly_chart(fig_status, use_container_width=True)
+                    else:
+                        st.info("No projects match the filters")
+                
+                with col2:
+                    # Project priority distribution
+                    st.markdown("**Priority Distribution**")
+                    if filtered_projects:
+                        priority_counts = pd.Series([p['Priority'] for p in filtered_projects]).value_counts().reset_index()
+                        priority_counts.columns = ['Priority', 'Count']
+                        
+                        fig_priority = px.pie(
+                            priority_counts, 
+                            values='Count', 
+                            names='Priority',
+                            color_discrete_sequence=px.colors.qualitative.Pastel,
+                            hover_data=['Count']
+                        )
+                        fig_priority.update_traces(
+                            textposition='inside', 
+                            textinfo='percent+label',
+                            hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
+                        )
+                        st.plotly_chart(fig_priority, use_container_width=True)
+                    else:
+                        st.info("No projects match the filters")
+                
+                # Display project filter statistics
+                if filtered_projects:
+                    st.info(f"Showing {len(filtered_projects)} out of {len(st.session_state.projects_data)} projects")
+            
+            # Project Gantt chart
+            if st.session_state.projects_data:
+                st.markdown("**Project Timeline**")
+                
+                # Project Gantt chart filters - start time on far left
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    # Get date range for all projects
+                    all_start_dates = [datetime.strptime(p['start_date'], '%Y-%m-%d') for p in st.session_state.projects_data]
+                    all_end_dates = [datetime.strptime(p['deadline'], '%Y-%m-%d') for p in st.session_state.projects_data]
+                    min_date = min(all_start_dates)
+                    max_date = max(all_end_dates)
                     
-                    with stat_col1:
-                        total_employees = len(filtered_employees)
-                        st.metric("Total Employees", total_employees)
+                    project_start_from = st.date_input(
+                        "Start Date From:",
+                        value=min_date,
+                        min_value=min_date,
+                        max_value=max_date,
+                        key="project_start_from"
+                    )
+                
+                with col2:
+                    project_start_to = st.date_input(
+                        "Start Date To:",
+                        value=max_date,
+                        min_value=min_date,
+                        max_value=max_date,
+                        key="project_start_to"
+                    )
+                
+                with col3:
+                    gantt_status_filter = st.multiselect(
+                        "Filter by Status:",
+                        options=list(set(p['status'] for p in st.session_state.projects_data)),
+                        default=list(set(p['status'] for p in st.session_state.projects_data)),
+                        key="project_status_gantt_filter"
+                    )
+                
+                with col4:
+                    gantt_priority_filter = st.multiselect(
+                        "Filter by Priority:",
+                        options=list(set(p['Priority'] for p in st.session_state.projects_data)),
+                        default=list(set(p['Priority'] for p in st.session_state.projects_data)),
+                        key="project_priority_gantt_filter"
+                    )
+                
+                # Filter projects
+                filtered_gantt_projects = []
+                for project in st.session_state.projects_data:
+                    project_start = datetime.strptime(project['start_date'], '%Y-%m-%d')
+                    project_status = project['status']
+                    project_priority = project['Priority']
                     
-                    with stat_col2:
-                        avg_performance = filtered_employee_df['performance_rating'].mean()
-                        st.metric("Avg Performance", f"{avg_performance:.1f}/5.0")
+                    if (project_start.date() >= project_start_from and
+                        project_start.date() <= project_start_to and
+                        project_status in gantt_status_filter and
+                        project_priority in gantt_priority_filter):
+                        filtered_gantt_projects.append(project)
+                
+                if filtered_gantt_projects:
+                    # Create project Gantt chart data
+                    project_gantt_data = []
+                    for project in filtered_gantt_projects:
+                        progress = self.calculate_project_progress(project['project_id'])
+                        start_date = datetime.strptime(project['start_date'], '%Y-%m-%d')
+                        end_date = datetime.strptime(project['deadline'], '%Y-%m-%d')
+                        duration_days = (end_date - start_date).days
+                        
+                        project_gantt_data.append({
+                            'Task': f"{project['project_id']} - {project['project_name']}",
+                            'Start': project['start_date'],
+                            'Finish': project['deadline'],
+                            'Status': project['status'],
+                            'Priority': project['Priority'],
+                            'Progress': progress,
+                            'Duration_Days': duration_days,
+                            'Team_Size': len(project.get('assigned_team', [])),
+                            'Complexity': project['Complexity_Score']
+                        })
                     
-                    with stat_col3:
-                        avg_experience = filtered_employee_df['experience_years'].mean()
-                        st.metric("Avg Experience", f"{avg_experience:.1f} years")
+                    project_gantt_df = pd.DataFrame(project_gantt_data)
                     
-                    with stat_col4:
-                        avg_skills = filtered_employee_df['total_skills'].mean()
-                        st.metric("Avg Skills", f"{avg_skills:.1f}")
+                    # Create project Gantt chart
+                    fig_project_gantt = px.timeline(
+                        project_gantt_df,
+                        x_start="Start",
+                        x_end="Finish",
+                        y="Task",
+                        color="Status",
+                        hover_data=["Priority", "Progress", "Duration_Days", "Team_Size", "Complexity"],
+                        color_discrete_sequence=px.colors.qualitative.Set2
+                    )
+                    
+                    fig_project_gantt.update_traces(
+                        hovertemplate=(
+                            "<b>%{y}</b><br>"
+                            "Duration: %{customdata[2]} days<br>"
+                            "Progress: %{customdata[1]}%<br>"
+                            "Priority: %{customdata[0]}<br>"
+                            "Team Size: %{customdata[3]}<br>"
+                            "Complexity: %{customdata[4]}/10<br>"
+                            "Start: %{x|%Y-%m-%d}<br>"
+                            "End: %{x_end|%Y-%m-%d}"
+                        )
+                    )
+                    
+                    fig_project_gantt.update_yaxes(autorange="reversed")
+                    fig_project_gantt.update_layout(
+                        height=400,
+                        xaxis_title="Timeline",
+                        yaxis_title="Projects",
+                        showlegend=True
+                    )
+                    
+                    st.plotly_chart(fig_project_gantt, use_container_width=True)
+                    
+                    # Display time range statistics
+                    st.info(f"Showing {len(filtered_gantt_projects)} projects with start dates from {project_start_from} to {project_start_to}")
+                else:
+                    st.warning("No projects match the selected filters.")
+            
+            # Part 2: Task Analysis
+            st.subheader("✅ Task Analysis")
+            
+            if st.session_state.tasks_data:
+                # Task filters
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    task_status_filter = st.multiselect(
+                        "Filter by Status:",
+                        options=list(set(t['status'] for t in st.session_state.tasks_data)),
+                        default=list(set(t['status'] for t in st.session_state.tasks_data)),
+                        key="task_status_filter"
+                    )
+                
+                with col2:
+                    task_category_filter = st.multiselect(
+                        "Filter by Category:",
+                        options=list(set(t['category'] for t in st.session_state.tasks_data)),
+                        default=list(set(t['category'] for t in st.session_state.tasks_data)),
+                        key="task_category_filter"
+                    )
+                
+                # Filter tasks
+                filtered_tasks = [t for t in st.session_state.tasks_data 
+                                 if t['status'] in task_status_filter 
+                                 and t['category'] in task_category_filter]
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    # Task status distribution
+                    st.markdown("**Status Distribution**")
+                    if filtered_tasks:
+                        task_status_counts = pd.Series([t['status'] for t in filtered_tasks]).value_counts().reset_index()
+                        task_status_counts.columns = ['Status', 'Count']
+                        
+                        fig_task_status = px.pie(
+                            task_status_counts,
+                            values='Count',
+                            names='Status',
+                            color_discrete_sequence=px.colors.qualitative.Set3,
+                            hover_data=['Count']
+                        )
+                        fig_task_status.update_traces(
+                            textposition='inside',
+                            textinfo='percent+label',
+                            hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
+                        )
+                        st.plotly_chart(fig_task_status, use_container_width=True)
+                    else:
+                        st.info("No tasks match the filters")
+                
+                with col2:
+                    # Task priority distribution
+                    st.markdown("**Priority Distribution**")
+                    if filtered_tasks:
+                        task_priority_data = []
+                        for task in filtered_tasks:
+                            # Assign priority to tasks (based on complexity and duration)
+                            complexity = task.get('complexity', 3)
+                            duration = task.get('estimated_duration', 7)
+                            
+                            # Simple priority calculation logic
+                            if complexity >= 4 or duration >= 14:
+                                priority = 'High'
+                            elif complexity >= 3 or duration >= 7:
+                                priority = 'Medium'
+                            else:
+                                priority = 'Low'
+                            
+                            task_priority_data.append({
+                                'Priority': priority,
+                                'Status': task['status']
+                            })
+                        
+                        task_priority_df = pd.DataFrame(task_priority_data)
+                        priority_counts = task_priority_df['Priority'].value_counts().reset_index()
+                        priority_counts.columns = ['Priority', 'Count']
+                        
+                        fig_task_priority = px.pie(
+                            priority_counts,
+                            values='Count',
+                            names='Priority',
+                            color_discrete_sequence=px.colors.qualitative.Pastel,
+                            hover_data=['Count']
+                        )
+                        fig_task_priority.update_traces(
+                            textposition='inside',
+                            textinfo='percent+label',
+                            hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>"
+                        )
+                        st.plotly_chart(fig_task_priority, use_container_width=True)
+                    else:
+                        st.info("No tasks match the filters")
+                
+                # Display task filter statistics
+                if filtered_tasks:
+                    st.info(f"Showing {len(filtered_tasks)} out of {len(st.session_state.tasks_data)} tasks")
+            
+            # Task Gantt chart
+            if st.session_state.tasks_data:
+                st.markdown("**Task Timeline**")
+                
+                # Task Gantt chart filters - start time on far left
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    # Task start time filter
+                    task_start_dates = []
+                    for task in st.session_state.tasks_data:
+                        created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
+                        if ' ' in created_date:
+                            start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d')
+                        else:
+                            start_date = datetime.strptime(created_date, '%Y-%m-%d')
+                        task_start_dates.append(start_date)
+                    
+                    if task_start_dates:
+                        min_task_start = min(task_start_dates)
+                        max_task_start = max(task_start_dates)
+                        
+                        task_start_from = st.date_input(
+                            "Start Date From:",
+                            value=min_task_start,
+                            min_value=min_task_start,
+                            max_value=max_task_start,
+                            key="task_start_from"
+                        )
+                    else:
+                        task_start_from = datetime.now().date()
+                
+                with col2:
+                    if task_start_dates:
+                        task_start_to = st.date_input(
+                            "Start Date To:",
+                            value=max_task_start,
+                            min_value=min_task_start,
+                            max_value=max_task_start,
+                            key="task_start_to"
+                        )
+                    else:
+                        task_start_to = datetime.now().date()
+                
+                with col3:
+                    # Filter tasks by project
+                    project_options = ["All Projects"] + [p['project_id'] for p in st.session_state.projects_data]
+                    selected_project = st.selectbox(
+                        "Filter by Project:",
+                        options=project_options,
+                        key="task_project_filter"
+                    )
+                
+                with col4:
+                    task_gantt_status_filter = st.multiselect(
+                        "Filter by Status:",
+                        options=list(set(t['status'] for t in st.session_state.tasks_data)),
+                        default=list(set(t['status'] for t in st.session_state.tasks_data)),
+                        key="task_status_gantt_filter"
+                    )
+                
+                # Filter tasks
+                filtered_gantt_tasks = []
+                for task in st.session_state.tasks_data:
+                    task_status = task['status']
+                    task_project = task.get('project_id')
+                    
+                    # Get task start date
+                    created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
+                    if ' ' in created_date:
+                        task_start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d')
+                    else:
+                        task_start_date = datetime.strptime(created_date, '%Y-%m-%d')
+                    
+                    # Apply filter conditions
+                    project_match = (selected_project == "All Projects" or task_project == selected_project)
+                    status_match = task_status in task_gantt_status_filter
+                    start_date_match = (task_start_date.date() >= task_start_from and 
+                                      task_start_date.date() <= task_start_to)
+                    
+                    if project_match and status_match and start_date_match:
+                        filtered_gantt_tasks.append(task)
+                
+                if filtered_gantt_tasks:
+                    # Create task Gantt chart data
+                    task_gantt_data = []
+                    for task in filtered_gantt_tasks:
+                        task_deadline = task.get('deadline')
+                        created_date = task.get('created_date', datetime.now().strftime('%Y-%m-%d'))
+                        
+                        # Calculate start date (creation date or duration-based estimate)
+                        start_date = datetime.strptime(created_date.split()[0], '%Y-%m-%d') if ' ' in created_date else datetime.strptime(created_date, '%Y-%m-%d')
+                        
+                        if task_deadline:
+                            end_date = datetime.strptime(task_deadline, '%Y-%m-%d')
+                            duration_days = (end_date - start_date).days
+                        else:
+                            end_date = start_date + timedelta(days=task.get('estimated_duration', 7))
+                            duration_days = task.get('estimated_duration', 7)
+                        
+                        task_gantt_data.append({
+                            'Task': f"{task['task_id']} - {task['task_name']}",
+                            'Start': start_date.strftime('%Y-%m-%d'),
+                            'Finish': end_date.strftime('%Y-%m-%d'),
+                            'Status': task['status'],
+                            'Category': task.get('category', 'Other'),
+                            'Project': task.get('project_id', 'Unknown'),
+                            'Duration_Days': duration_days,
+                            'Complexity': task.get('complexity', 3),
+                            'Assigned_To': task.get('assigned_to_name', 'Unassigned')
+                        })
+                    
+                    task_gantt_df = pd.DataFrame(task_gantt_data)
+                    
+                    # Create task Gantt chart
+                    fig_task_gantt = px.timeline(
+                        task_gantt_df,
+                        x_start="Start",
+                        x_end="Finish",
+                        y="Task",
+                        color="Status",
+                        hover_data=["Category", "Project", "Duration_Days", "Complexity", "Assigned_To"],
+                        color_discrete_sequence=px.colors.qualitative.Set3
+                    )
+                    
+                    fig_task_gantt.update_traces(
+                        hovertemplate=(
+                            "<b>%{y}</b><br>"
+                            "Project: %{customdata[1]}<br>"
+                            "Category: %{customdata[0]}<br>"
+                            "Duration: %{customdata[2]} days<br>"
+                            "Complexity: %{customdata[3]}/5<br>"
+                            "Assigned To: %{customdata[4]}<br>"
+                            "Start: %{x|%Y-%m-%d}<br>"
+                            "End: %{x_end|%Y-%m-%d}"
+                        )
+                    )
+                    
+                    fig_task_gantt.update_yaxes(autorange="reversed")
+                    fig_task_gantt.update_layout(
+                        height=400,
+                        xaxis_title="Timeline",
+                        yaxis_title="Tasks",
+                        showlegend=True
+                    )
+                    
+                    st.plotly_chart(fig_task_gantt, use_container_width=True)
+                    
+                    # Display time range statistics
+                    st.info(f"Showing {len(filtered_gantt_tasks)} tasks with start dates from {task_start_from} to {task_start_to}")
+                else:
+                    st.warning("No tasks match the selected filters.")
+            
+                # Part 3: Team & Performance Analysis
+                st.subheader("👥 Team & Performance Analysis")
+                
+                if st.session_state.employees_data:
+                    # Add department filter
+                    col1, = st.columns(1)
+                    
+                    with col1:
+                        dept_filter = st.multiselect(
+                            "Filter by Department:",
+                            options=list(set(e['department'] for e in st.session_state.employees_data)),
+                            default=list(set(e['department'] for e in st.session_state.employees_data)),
+                            key="employee_dept_filter"
+                        )
+                    
+                    # Initialize variables
+                    filtered_employees = []
+                    filtered_employee_df = pd.DataFrame()
+                    
+                    # Check if departments are selected
+                    if not dept_filter:
+                        st.warning("Please select at least one department to view employee data.")
+                    else:
+                        # Only show table when departments are selected
+                        st.markdown("**Employee Overview**")
+                        employee_df = pd.DataFrame(st.session_state.employees_data)
+                        
+                        # Filter employees
+                        filtered_employees = [e for e in st.session_state.employees_data 
+                                            if e['department'] in dept_filter]
+                        
+                        filtered_employee_df = pd.DataFrame(filtered_employees)
+                    
+                    # Handle data display uniformly outside conditional statement
+                    if not filtered_employee_df.empty:
+                        # Display employee data table
+                        st.dataframe(
+                            filtered_employee_df[['employee_id', 'name', 'job_title', 'department', 
+                                               'experience_years', 'performance_rating', 'total_skills', 'avg_proficiency']],
+                            use_container_width=True,
+                            height=300
+                        )
+                    else:
+                        # Handle empty data case
+                        st.info("No employee data to display.")
+                    
+                    # Team analysis charts
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        # Department distribution pie chart
+                        st.markdown("**Department Distribution**")
+                        if filtered_employees:  # This variable is now always defined
+                            dept_counts = pd.Series([e['department'] for e in filtered_employees]).value_counts().reset_index()
+                            dept_counts.columns = ['Department', 'Count']
+                            
+                            fig_dept = px.pie(
+                                dept_counts,
+                                values='Count',
+                                names='Department',
+                                color_discrete_sequence=px.colors.qualitative.Bold
+                            )
+                            fig_dept.update_traces(
+                                textposition='inside',
+                                textinfo='percent+label',
+                                hovertemplate="<b>%{label}</b><br>Employees: %{value}<extra></extra>"
+                            )
+                            st.plotly_chart(fig_dept, use_container_width=True)
+                        else:
+                            st.info("No employees match the filters")
+                        
+                        # Experience distribution histogram (with edge lines)
+                        if filtered_employees:  # This variable is now always defined
+                            st.markdown("**Experience Distribution**")
+                            fig_exp_hist = px.histogram(
+                                filtered_employee_df,
+                                x='experience_years',
+                                nbins=10,
+                                color_discrete_sequence=['#636EFA'],
+                                opacity=0.8
+                            )
+                            fig_exp_hist.update_traces(
+                                marker_line_color='black',  # Add black edge lines
+                                marker_line_width=1.5,      # Edge line width
+                                opacity=0.8                 # Slightly transparent to show edges
+                            )
+                            fig_exp_hist.update_layout(
+                                xaxis_title="Experience (Years)",
+                                yaxis_title="Number of Employees",
+                                bargap=0.1  # Set gap between bars
+                            )
+                            st.plotly_chart(fig_exp_hist, use_container_width=True)
+                    
+                    with col2:
+                        # Performance rating box plot
+                        st.markdown("**Performance Rating by Department**")
+                        if filtered_employees:  # This variable is now always defined
+                            fig_perf_box = px.box(
+                                filtered_employee_df,
+                                x='department',
+                                y='performance_rating',
+                                color='department',
+                                points="all",
+                                hover_data=['name', 'job_title']
+                            )
+                            fig_perf_box.update_layout(
+                                xaxis_title="Department",
+                                yaxis_title="Performance Rating (1-5)"
+                            )
+                            st.plotly_chart(fig_perf_box, use_container_width=True)
+                        else:
+                            st.info("No employees match the filters")
+                        
+                        # Skills vs performance relationship
+                        if filtered_employees:  # This variable is now always defined
+                            st.markdown("**Skills vs Performance**")
+                            fig_skills_perf = px.scatter(
+                                filtered_employee_df,
+                                x='total_skills',
+                                y='performance_rating',
+                                size='experience_years',
+                                color='department',
+                                hover_data=['name', 'job_title', 'avg_proficiency'],
+                                size_max=20
+                            )
+                            fig_skills_perf.update_layout(
+                                xaxis_title="Number of Skills",
+                                yaxis_title="Performance Rating"
+                            )
+                            st.plotly_chart(fig_skills_perf, use_container_width=True)
+                    
+                    # Team statistics summary
+                    if filtered_employees:
+                        st.markdown("**Team Statistics Summary**")
+                        stat_col1, stat_col2, stat_col3, stat_col4 = st.columns(4)
+                        
+                        with stat_col1:
+                            total_employees = len(filtered_employees)
+                            st.metric("Total Employees", total_employees)
+                        
+                        with stat_col2:
+                            avg_performance = filtered_employee_df['performance_rating'].mean()
+                            st.metric("Avg Performance", f"{avg_performance:.1f}/5.0")
+                        
+                        with stat_col3:
+                            avg_experience = filtered_employee_df['experience_years'].mean()
+                            st.metric("Avg Experience", f"{avg_experience:.1f} years")
+                        
+                        with stat_col4:
+                            avg_skills = filtered_employee_df['total_skills'].mean()
+                            st.metric("Avg Skills", f"{avg_skills:.1f}")
+    
+                    # --- NEW SECTION: Employee Task Workload ---
+                    st.markdown("---")
+                    st.subheader("🛠️ Employee Workload & Task Progress")
+                    
+                    if st.session_state.tasks_data and filtered_employees:
+                        # 1. Filters for this specific section (Status & Employee)
+                        col_f1, col_f2 = st.columns(2)
+                        
+                        with col_f1:
+                            # Workload Status Filter with "Select All" toggle
+                            available_statuses = sorted(list(set(t['status'] for t in st.session_state.tasks_data)))
+                            
+                            # Add Checkbox for Select All
+                            select_all_status = st.checkbox("Select All Statuses", value=True, key="chk_all_statuses_workload")
+                            
+                            if select_all_status:
+                                workload_status_filter = available_statuses
+                                # Show disabled multiselect for visual confirmation
+                                st.multiselect(
+                                    "Filter Workload by Task Status:",
+                                    options=available_statuses,
+                                    default=available_statuses,
+                                    disabled=True,
+                                    key="disabled_status_filter_workload"
+                                )
+                            else:
+                                workload_status_filter = st.multiselect(
+                                    "Filter Workload by Task Status:",
+                                    options=available_statuses,
+                                    default=available_statuses,
+                                    key="emp_workload_status_filter"
+                                )
+    
+                        with col_f2:
+                             # Employee Name Filter with "Select All" toggle
+                            emp_names_list = [e['name'] for e in filtered_employees]
+                            
+                            # Add Checkbox for Select All
+                            select_all_emps = st.checkbox("Select All Employees", value=True, key="chk_all_emps_workload")
+                            
+                            if select_all_emps:
+                                selected_emp_names = emp_names_list
+                                # Show disabled multiselect for visual confirmation
+                                st.multiselect(
+                                    "Focus on specific employees:",
+                                    options=emp_names_list,
+                                    default=emp_names_list,
+                                    disabled=True,
+                                    key="disabled_emp_filter_workload"
+                                )
+                            else:
+                                selected_emp_names = st.multiselect(
+                                    "Focus on specific employees:",
+                                    options=emp_names_list,
+                                    default=emp_names_list,
+                                    key="emp_workload_name_filter"
+                                )
+                        
+                        # 2. Data Processing
+                        # Filter tasks that belong to the selected department/employees AND match status filter
+                        workload_data = []
+                        
+                        # Create a map of ID -> Name for easier lookup
+                        emp_id_to_name = {e['employee_id']: e['name'] for e in filtered_employees}
+                        
+                        for task in st.session_state.tasks_data:
+                            assignee_id = task.get('assigned_to_id')
+                            status = task.get('status', 'Unassigned')
+                            
+                            # Conditions:
+                            # 1. Task is assigned to an employee in the current department filter
+                            # 2. That employee is selected in the name filter
+                            # 3. Status matches status filter
+                            if (assignee_id in emp_id_to_name and 
+                                emp_id_to_name[assignee_id] in selected_emp_names and
+                                status in workload_status_filter):
+                                
+                                workload_data.append({
+                                    'Employee': emp_id_to_name[assignee_id],
+                                    'Task': task['task_name'],
+                                    'Status': status,
+                                    'Priority': task.get('complexity', 'Medium'), # using complexity as proxy if priority missing
+                                    'Count': 1
+                                })
+    
+                        # 3. Visualization
+                        if workload_data:
+                            workload_df = pd.DataFrame(workload_data)
+                            
+                            # Stacked Bar Chart: Task Count per Employee colored by Status
+                            st.markdown("**Task Count & Status per Employee**")
+                            
+                            # Grouping for the chart
+                            chart_df = workload_df.groupby(['Employee', 'Status']).size().reset_index(name='Task Count')
+                            
+                            fig_workload = px.bar(
+                                chart_df,
+                                x='Employee',
+                                y='Task Count',
+                                color='Status',
+                                title="Workload Distribution",
+                                text_auto=True,
+                                color_discrete_sequence=px.colors.qualitative.Prism
+                            )
+                            
+                            fig_workload.update_layout(
+                                xaxis_title="Employee",
+                                yaxis_title="Number of Tasks",
+                                legend_title="Task Status"
+                            )
+                            
+                            st.plotly_chart(fig_workload, use_container_width=True)
+                            
+                            # 4. Detailed Metrics Table
+                            st.markdown("**Detailed Progress Metrics**")
+                            
+                            # Calculate metrics per employee
+                            metrics_data = []
+                            for name in selected_emp_names:
+                                emp_tasks = [t for t in st.session_state.tasks_data 
+                                            if t.get('assigned_to_name') == name] # Get ALL tasks for this person, regardless of visual filter
+                                
+                                if not emp_tasks:
+                                    continue
+                                    
+                                total = len(emp_tasks)
+                                completed = len([t for t in emp_tasks if t['status'] == 'Completed'])
+                                in_progress = len([t for t in emp_tasks if t['status'] == 'In Progress'])
+                                
+                                completion_rate = (completed / total * 100) if total > 0 else 0
+                                
+                                metrics_data.append({
+                                    'Employee': name,
+                                    'Total Tasks': total,
+                                    'Active (In Progress)': in_progress,
+                                    'Completed': completed,
+                                    'Completion Rate': f"{completion_rate:.1f}%"
+                                })
+                                
+                            if metrics_data:
+                                metrics_df = pd.DataFrame(metrics_data)
+                                st.dataframe(metrics_df, use_container_width=True, hide_index=True)
+                                
+                        else:
+                            st.info("No tasks found matching the selected filters for these employees.")
+                    
+                    elif not st.session_state.tasks_data:
+                        st.info("No tasks available in the system to analyze.")
+                    elif not filtered_employees:
+                        st.info("No employees selected.")
 
     def render_documents_issues(self):
         """Render Documents & Issues Tab"""
@@ -2717,9 +2906,9 @@ class ProjectManagementSystem:
             }
         ]
         
-        # Sample Tasks
+        # Sample Tasks - EXPANDED to show multiple statuses per employee
         sample_tasks = [
-            # Project 1 Tasks
+            # --- Alice Johnson (EMP-001) - Mixed Statuses ---
             {
                 'task_id': 'TASK-1001',
                 'project_id': 'PROJ-001',
@@ -2731,29 +2920,48 @@ class ProjectManagementSystem:
                 'estimated_budget': 8500,
                 'start_date': '2025-01-20',
                 'deadline': '2025-03-15',
-                'status': 'Completed',
+                'status': 'Completed', # Completed task
                 'assigned_to_id': 'EMP-001',
                 'assigned_to_name': 'Alice Johnson',
                 'required_skillsets': 'Python; AWS; Data Analysis',
                 'created_date': '2025-01-15 09:00:00'
             },
             {
-                'task_id': 'TASK-1002',
+                'task_id': 'TASK-1004',
                 'project_id': 'PROJ-001',
-                'task_name': 'Build ML Models',
-                'task_description': 'Develop machine learning models for predictive analytics and anomaly detection.',
+                'task_name': 'Optimize Query Performance',
+                'task_description': 'Analyze and optimize slow database queries for the analytics engine.',
                 'complexity': 5,
-                'category': 'Data Science',
-                'estimated_duration': 30,
-                'estimated_budget': 12000,
-                'start_date': '2025-02-01',
-                'deadline': '2025-04-30',
-                'status': 'In Progress',
-                'assigned_to_id': 'EMP-003',
-                'assigned_to_name': 'Carol Davis',
-                'required_skillsets': 'Python; Machine Learning; TensorFlow',
-                'created_date': '2025-01-20 10:30:00'
+                'category': 'Database',
+                'estimated_duration': 10,
+                'estimated_budget': 3000,
+                'start_date': '2025-03-16',
+                'deadline': '2025-03-30',
+                'status': 'In Progress', # In Progress task
+                'assigned_to_id': 'EMP-001',
+                'assigned_to_name': 'Alice Johnson',
+                'required_skillsets': 'SQL; PostgreSQL; Performance Tuning',
+                'created_date': '2025-02-15 09:00:00'
             },
+            {
+                'task_id': 'TASK-1005',
+                'project_id': 'PROJ-001',
+                'task_name': 'Security Audit Integration',
+                'task_description': 'Integrate security compliance checks into the data pipeline.',
+                'complexity': 4,
+                'category': 'Security',
+                'estimated_duration': 7,
+                'estimated_budget': 2500,
+                'start_date': '2025-04-01',
+                'deadline': '2025-04-10',
+                'status': 'Assigned', # Assigned (Not Started) task
+                'assigned_to_id': 'EMP-001',
+                'assigned_to_name': 'Alice Johnson',
+                'required_skillsets': 'Security; Python; AWS',
+                'created_date': '2025-02-20 09:00:00'
+            },
+
+            # --- Bob Chen (EMP-002) - Heavy Workload ---
             {
                 'task_id': 'TASK-1003',
                 'project_id': 'PROJ-001',
@@ -2770,24 +2978,6 @@ class ProjectManagementSystem:
                 'assigned_to_name': 'Bob Chen',
                 'required_skillsets': 'React; JavaScript; CSS',
                 'created_date': '2025-01-25 14:00:00'
-            },
-            # Project 2 Tasks
-            {
-                'task_id': 'TASK-2001',
-                'project_id': 'PROJ-002',
-                'task_name': 'User Research & Wireframes',
-                'task_description': 'Conduct user research and create wireframes for the new e-commerce design.',
-                'complexity': 3,
-                'category': 'Design',
-                'estimated_duration': 14,
-                'estimated_budget': 4500,
-                'start_date': '2025-02-05',
-                'deadline': '2025-02-28',
-                'status': 'Completed',
-                'assigned_to_id': 'EMP-007',
-                'assigned_to_name': 'Grace Kim',
-                'required_skillsets': 'Figma; User Research; Prototyping',
-                'created_date': '2025-02-01 09:00:00'
             },
             {
                 'task_id': 'TASK-2002',
@@ -2806,7 +2996,61 @@ class ProjectManagementSystem:
                 'required_skillsets': 'React; JavaScript; CSS',
                 'created_date': '2025-02-10 11:00:00'
             },
-            # Project 3 Tasks
+            {
+                'task_id': 'TASK-2003',
+                'project_id': 'PROJ-002',
+                'task_name': 'Mobile Responsive Layout',
+                'task_description': 'Ensure all pages are fully responsive on mobile devices.',
+                'complexity': 3,
+                'category': 'Frontend',
+                'estimated_duration': 12,
+                'estimated_budget': 4000,
+                'start_date': '2025-02-15',
+                'deadline': '2025-02-28',
+                'status': 'Completed',
+                'assigned_to_id': 'EMP-002',
+                'assigned_to_name': 'Bob Chen',
+                'required_skillsets': 'CSS; Mobile Design',
+                'created_date': '2025-02-01 10:00:00'
+            },
+
+            # --- Carol Davis (EMP-003) ---
+            {
+                'task_id': 'TASK-1002',
+                'project_id': 'PROJ-001',
+                'task_name': 'Build ML Models',
+                'task_description': 'Develop machine learning models for predictive analytics and anomaly detection.',
+                'complexity': 5,
+                'category': 'Data Science',
+                'estimated_duration': 30,
+                'estimated_budget': 12000,
+                'start_date': '2025-02-01',
+                'deadline': '2025-04-30',
+                'status': 'In Progress',
+                'assigned_to_id': 'EMP-003',
+                'assigned_to_name': 'Carol Davis',
+                'required_skillsets': 'Python; Machine Learning; TensorFlow',
+                'created_date': '2025-01-20 10:30:00'
+            },
+            {
+                'task_id': 'TASK-1006',
+                'project_id': 'PROJ-001',
+                'task_name': 'Model Validation Pipeline',
+                'task_description': 'Create automated tests to validate ML model accuracy over time.',
+                'complexity': 4,
+                'category': 'Data Science',
+                'estimated_duration': 14,
+                'estimated_budget': 5000,
+                'start_date': '2025-05-01',
+                'deadline': '2025-05-15',
+                'status': 'Assigned',
+                'assigned_to_id': 'EMP-003',
+                'assigned_to_name': 'Carol Davis',
+                'required_skillsets': 'Python; Data Analysis',
+                'created_date': '2025-02-25 10:30:00'
+            },
+
+            # --- David Wilson (EMP-004) - Mixed Status (No Blocked) ---
             {
                 'task_id': 'TASK-3001',
                 'project_id': 'PROJ-003',
@@ -2818,13 +3062,84 @@ class ProjectManagementSystem:
                 'estimated_budget': 8000,
                 'start_date': '2025-03-15',
                 'deadline': '2025-04-15',
-                'status': 'Assigned',
+                'status': 'In Progress',
                 'assigned_to_id': 'EMP-004',
                 'assigned_to_name': 'David Wilson',
                 'required_skillsets': 'AWS; Linux; Docker',
                 'created_date': '2025-02-20 13:00:00'
             },
-            # Project 4 Tasks
+            {
+                'task_id': 'TASK-3002',
+                'project_id': 'PROJ-003',
+                'task_name': 'Configure Auto-scaling',
+                'task_description': 'Set up auto-scaling groups for the new cloud environment.',
+                'complexity': 5,
+                'category': 'DevOps',
+                'estimated_duration': 10,
+                'estimated_budget': 4500,
+                'start_date': '2025-04-16',
+                'deadline': '2025-04-26',
+                'status': 'Assigned', # Changed from Blocked to Assigned
+                'assigned_to_id': 'EMP-004',
+                'assigned_to_name': 'David Wilson',
+                'required_skillsets': 'AWS; Kubernetes',
+                'created_date': '2025-02-25 13:00:00'
+            },
+             {
+                'task_id': 'TASK-3003',
+                'project_id': 'PROJ-003',
+                'task_name': 'CI/CD Pipeline Setup',
+                'task_description': 'Implement Jenkins pipelines for automated deployment.',
+                'complexity': 4,
+                'category': 'DevOps',
+                'estimated_duration': 15,
+                'estimated_budget': 6000,
+                'start_date': '2025-05-01',
+                'deadline': '2025-05-15',
+                'status': 'Assigned',
+                'assigned_to_id': 'EMP-004',
+                'assigned_to_name': 'David Wilson',
+                'required_skillsets': 'Jenkins; CI/CD',
+                'created_date': '2025-03-01 13:00:00'
+            },
+
+            # --- Grace Kim (EMP-007) ---
+            {
+                'task_id': 'TASK-2001',
+                'project_id': 'PROJ-002',
+                'task_name': 'User Research & Wireframes',
+                'task_description': 'Conduct user research and create wireframes for the new e-commerce design.',
+                'complexity': 3,
+                'category': 'Design',
+                'estimated_duration': 14,
+                'estimated_budget': 4500,
+                'start_date': '2025-02-05',
+                'deadline': '2025-02-28',
+                'status': 'Completed',
+                'assigned_to_id': 'EMP-007',
+                'assigned_to_name': 'Grace Kim',
+                'required_skillsets': 'Figma; User Research; Prototyping',
+                'created_date': '2025-02-01 09:00:00'
+            },
+            {
+                'task_id': 'TASK-2004',
+                'project_id': 'PROJ-002',
+                'task_name': 'High Fidelity Mockups',
+                'task_description': 'Create pixel-perfect mockups for the checkout flow.',
+                'complexity': 4,
+                'category': 'Design',
+                'estimated_duration': 10,
+                'estimated_budget': 3500,
+                'start_date': '2025-03-01',
+                'deadline': '2025-03-10',
+                'status': 'Completed',
+                'assigned_to_id': 'EMP-007',
+                'assigned_to_name': 'Grace Kim',
+                'required_skillsets': 'Figma; UI Design',
+                'created_date': '2025-02-20 09:00:00'
+            },
+
+            # --- Frank Lee (EMP-006) ---
             {
                 'task_id': 'TASK-4001',
                 'project_id': 'PROJ-004',
@@ -2842,6 +3157,25 @@ class ProjectManagementSystem:
                 'required_skillsets': 'Java; Spring; SQL',
                 'created_date': '2025-01-10 10:00:00'
             },
+             {
+                'task_id': 'TASK-4003',
+                'project_id': 'PROJ-004',
+                'task_name': 'API Documentation',
+                'task_description': 'Document all API endpoints using Swagger.',
+                'complexity': 2,
+                'category': 'Backend',
+                'estimated_duration': 5,
+                'estimated_budget': 1500,
+                'start_date': '2025-02-21',
+                'deadline': '2025-02-26',
+                'status': 'Completed',
+                'assigned_to_id': 'EMP-006',
+                'assigned_to_name': 'Frank Lee',
+                'required_skillsets': 'Swagger; Documentation',
+                'created_date': '2025-02-15 10:00:00'
+            },
+
+            # --- Henry Brown (EMP-008) ---
             {
                 'task_id': 'TASK-4002',
                 'project_id': 'PROJ-004',
@@ -2858,6 +3192,23 @@ class ProjectManagementSystem:
                 'assigned_to_name': 'Henry Brown',
                 'required_skillsets': 'React; JavaScript',
                 'created_date': '2025-01-15 14:00:00'
+            },
+            {
+                'task_id': 'TASK-4004',
+                'project_id': 'PROJ-004',
+                'task_name': 'Unit Testing',
+                'task_description': 'Write unit tests for the frontend components.',
+                'complexity': 3,
+                'category': 'Testing',
+                'estimated_duration': 7,
+                'estimated_budget': 2000,
+                'start_date': '2025-03-16',
+                'deadline': '2025-03-23',
+                'status': 'Assigned',
+                'assigned_to_id': 'EMP-008',
+                'assigned_to_name': 'Henry Brown',
+                'required_skillsets': 'Jest; React Testing Library',
+                'created_date': '2025-03-10 14:00:00'
             }
         ]
         
