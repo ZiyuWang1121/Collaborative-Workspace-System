@@ -3283,15 +3283,15 @@ class ProjectManagementSystem:
         """Main method to run the application"""
         # Set up the page
         st.set_page_config(
-            page_title="Project Management System",
+            page_title="Collaborative Workspace System",
             page_icon="🚀",
             layout="wide"
         )
         
         # Title and introduction
-        st.title("🚀 Project Management System")
+        st.title("🚀 Collaborative Workspace System")
         st.markdown("""
-        Comprehensive project management system with employee skill matching, progress tracking, and document versioning.
+        Comprehensive collaborative workspace system with employee skill matching, progress tracking, and document versioning.
         """)
         
         # Use radio buttons，automatically refresh when switching
