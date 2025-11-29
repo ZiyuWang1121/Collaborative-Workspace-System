@@ -10,8 +10,8 @@ versioning.
 |------|-------------|------------------|
 | **Wang	Ziyu** | 3035xxxxxx | Data Simulation & Visualization, Collaborative System, OO Diagram, System Demo Record |
 | **Zhang	Haowen** | 3035xxxxxx | Coding for Recommendation & Prediction Models; Model Result Visualization |
-| **Cheng	Yuen Chit** | 3035xxxxxx | Project Report |
-| **Ng	Tsz Wing** | 3035xxxxxx | PowerPoint Slides & Presentation Recording |
+| **Ng	Tsz Wing** | 3035xxxxxx | Project Report |
+| **Cheng	Yuen Chit** | 3035xxxxxx | PowerPoint Slides & Presentation Recording |
 
 ## Project Objectives
 -  Design the databases, identify/collect/simulate the data, and draw object
