@@ -6,11 +6,10 @@ scheduling, profiling and roles, progress tracking and status, and document
 versioning. 
 
 ## Workload Distribution
-- **Wang	Ziyu**	u3577754@connect.hku.hk
--   Data Simulation and Visualization; Coding for the Collaborative System; OO Diagram; System Demo Record
-- **Zhang	Haowen**	u3658036@connect.hku.hk
-- **Cheng	Yuen Chit**	u3664691@connect.hku.hk
-- **Ng	Tsz Wing**	u3637297@connect.hku.hk
+- **Wang	Ziyu**: Data Simulation and Visualization; Coding for the Collaborative System; OO Diagram; System Demo Record
+- **Zhang	Haowen**: Coding for Recommendation and Prediction Models; Model Result Visualization 
+- **Cheng	Yuen Chit**: Report
+- **Ng	Tsz Wing**: Powerpoint and Presentation Record
 
 ## Project Objectives
 -  Design the databases, identify/collect/simulate the data, and draw object
