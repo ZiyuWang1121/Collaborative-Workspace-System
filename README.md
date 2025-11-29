@@ -6,7 +6,7 @@ scheduling, profiling and roles, progress tracking and status, and document
 versioning. 
 
 ## Workload Distribution
-| Team Member | Student ID | Key Deliverables |
+| Team Member | Student ID | Contributions |
 |------|-------------|------------------|
 | **Wang	Ziyu** | 3035xxxxxx | Coding for Collaborative System, Data Simulation & Visualization, OO Diagram, System Demo Record |
 | **Zhang	Haowen** | 3035xxxxxx | Coding for Recommendation & Prediction Models; Model Result Visualization |
