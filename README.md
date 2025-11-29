@@ -6,12 +6,12 @@ scheduling, profiling and roles, progress tracking and status, and document
 versioning. 
 
 ## Workload Distribution
-| Role | Team Member | Key Deliverables |
+| Team Member | Student ID | Key Deliverables |
 |------|-------------|------------------|
-| System Development | **Sarah** | Data Simulation, Collaborative System, OO Diagram, Demo Record |
-| ML Engineering | **Haowen** | Recommendation Models, Prediction Algorithms, Result Visualization |
-| Documentation | **Wing** | Project Report |
-| Presentation | **Yuen Chit** | PowerPoint Slides, Presentation Recording |
+| **Wang	Ziyu** | 3035xxxxxx | Data Simulation and Visualization; Coding for the Collaborative System; OO Diagram; System Demo Record |
+| **Zhang	Haowen** | 3035xxxxxx | Coding for Recommendation and Prediction Models; Model Result Visualization |
+| **Cheng	Yuen Chit** | 3035xxxxxx | Project Report |
+| **Ng	Tsz Wing** | 3035xxxxxx | PowerPoint Slides and Presentation Recording |
 
 ## Project Objectives
 -  Design the databases, identify/collect/simulate the data, and draw object
