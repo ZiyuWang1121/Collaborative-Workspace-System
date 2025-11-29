@@ -1,9 +1,16 @@
 # Collaborative-Workspace-System 
 ## (2025 Sem 1, Supervisor: Dr Lau)
-This project aims to develop a collaborative workspace system.  The system allows 
-users to define a project, member and project task.  It provides functions of project 
+This project aims to develop a collaborative workspace system. The system allows 
+users to define a project, member and project task. It provides functions of project 
 scheduling, profiling and roles, progress tracking and status, and document 
 versioning. 
+
+## Workload Distribution
+- **Wang	Ziyu**	u3577754@connect.hku.hk
+-   Data Simulation and Visualization; Coding for the Collaborative System; OO Diagram; System Demo Record
+- **Zhang	Haowen**	u3658036@connect.hku.hk
+- **Cheng	Yuen Chit**	u3664691@connect.hku.hk
+- **Ng	Tsz Wing**	u3637297@connect.hku.hk
 
 ## Project Objectives
 -  Design the databases, identify/collect/simulate the data, and draw object
