@@ -8,10 +8,10 @@ versioning.
 ## Workload Distribution
 | Team Member | Student ID | Contributions |
 |------|-------------|------------------|
-| **Wang	Ziyu** | 3035xxxxxx | Coding for Collaborative System, Data Simulation & Visualization, OO Diagram, System Demo Record |
-| **Zhang	Haowen** | 3035xxxxxx | Coding for Recommendation & Prediction Models, Model Result Visualization |
-| **Ng	Tsz Wing** | 3035xxxxxx | Project Report |
-| **Cheng	Yuen Chit** | 3035xxxxxx | PowerPoint Slides & Presentation Recording |
+| **Wang	Ziyu** |   | Coding for Collaborative System, Data Simulation & Visualization, OO Diagram, System Demo Record |
+| **Zhang	Haowen** |   | Coding for Recommendation & Prediction Models, Model Result Visualization |
+| **Ng	Tsz Wing** |   | Project Report |
+| **Cheng	Yuen Chit** |   | PowerPoint Slides & Presentation Recording |
 
 ## Testing Instruction
 Please refer to the following steps to use this system:  
