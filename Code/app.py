@@ -1,4 +1,4 @@
-# project_management_system.py
+# app.py
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
@@ -27,6 +27,7 @@ class ProjectManagementSystem:
             
         self.recommendation_model = None
         self.prediction_model = None
+        self.skills_model = None
         
         # Workflow session states
         if 'current_project_workflow' not in st.session_state:
@@ -161,20 +162,6 @@ class ProjectManagementSystem:
         # Update data source
         st.session_state.project_form_data['assigned_team'] = assigned_ids
     
-    def get_task_recommendations(self, category, complexity):
-        """Get budget and time recommendations for a task"""
-        # Base estimations (can be refined with historical data)
-        base_duration = {'Frontend': 5, 'Backend': 8, 'Database': 4, 'DevOps': 6, 'Security': 7, 'Design': 3, 'Testing': 4, 'Other': 5}
-        base_budget = {'Frontend': 1000, 'Backend': 1500, 'Database': 800, 'DevOps': 1200, 'Security': 1400, 'Design': 600, 'Testing': 700, 'Other': 800}
-        
-        # Complexity multiplier
-        multiplier = (1 + (complexity - 1) * 0.5) # e.g., complexity 5 = 1 + (4 * 0.5) = 3x
-        
-        rec_duration = int(base_duration.get(category, 5) * multiplier)
-        rec_budget = int(base_budget.get(category, 800) * multiplier)
-        
-        return rec_duration, rec_budget
-    
     def get_employee_name_map(self):
         """Helper to get a dict of {id: name} for quick lookup"""
         name_map = {}
@@ -190,15 +177,44 @@ class ProjectManagementSystem:
         return []
     
     # --- External Interface Methods ---
+
+    def set_skills_model(self, model_function):
+        """Set the external skills model interface"""
+        self.skills_model = model_function
+    
+    def get_skills_from_external_model(self, project_data):
+        """Get skills list from external skills model"""
+        if self.skills_model is not None:
+            try:
+                skills_list = self.skills_model(project_data)
+                st.session_state.current_recommendation_skills = skills_list
+                return skills_list
+            except Exception as e:
+                st.warning(f"External skills model failed: {e}")
+                return []
+        else:
+            # Fallback: extract from required_skillsets
+            required_skills = project_data.get('required_skillsets', '')
+            skills_list = [skill.strip() for skill in required_skills.split(';') if skill.strip()] if required_skills else []
+            st.session_state.current_recommendation_skills = skills_list
+            return skills_list
     
     def set_recommendation_model(self, model_function):
         """Set the external recommendation model interface"""
         self.recommendation_model = model_function
+
+    def set_task_recommendation_model(self, model_function):
+        """Set the external recommendation model interface"""
+        self.task_recommendation_model = model_function
     
     def set_prediction_model(self, model_function):
         """Set the external prediction model interface"""
         self.prediction_model = model_function
-    
+
+    def get_task_recommendations(self,complexity):
+        if self.task_recommendation_model is not None:
+            return self.task_recommendation_model(complexity)
+        
     def get_recommendations(self, required_skills, min_match_threshold=0.6):
         """Get recommendations using external model or fallback to internal matching"""
         if self.recommendation_model is not None:
@@ -570,8 +586,7 @@ class ProjectManagementSystem:
             st.subheader("3. Recommendations & Assignment")
             
             project_data = st.session_state.project_form_data
-            
-            
+        
             # --- Prepare data mapping ---
             emp_name_map = self.get_employee_name_map()
             
@@ -657,6 +672,7 @@ class ProjectManagementSystem:
                     # Get latest ID list for judging button state
                     current_team_ids = project_data.get('assigned_team', [])
                     
+                    # Display employee recommendations first
                     for i, rec in enumerate(recommendations[:5]):
                         employee = rec['employee']
                         emp_id = employee['employee_id']
@@ -675,7 +691,6 @@ class ProjectManagementSystem:
                             
                             with col3:
                                 # Use on_click callback, this triggers update_team_assignment
-                                # update_team_assignment updates both data and multiselect key
                                 if is_assigned:
                                     st.button("✅ Remove", 
                                             key=f"remove_ai_{emp_id}_{i}", 
@@ -689,13 +704,31 @@ class ProjectManagementSystem:
                                             type="primary", 
                                             on_click=self.update_team_assignment,
                                             args=(emp_id, "add"))
+                    
+                    # --- NEW: Display skills after employee recommendations ---
+                    # Get skills from external skills model
+                    skills_list = self.get_skills_from_external_model(project_data['description'])
+                    
+                    if skills_list:
+                        #st.markdown("---")
+                        #st.markdown(f"**🔍 Recommendation Basis**")
+                        
+                        # tight badge layout
+                        st.write("Skills used for matching:")
+                        
+                        # create a row of badges
+                        badge_container = st.container()
+                        with badge_container:
+                            cols = st.columns([1] * min(len(skills_list), 8))  # 8 badges at most
+                            for i, skill in enumerate(skills_list):
+                                if i < len(cols):
+                                    with cols[i]:
+                                        st.badge(skill)
+                
                 else:
                     st.info("No recommendations found.")
                     if not project_data.get('required_skillsets'):
-                        st.warning("No required descriptions specified for this project. To get AI recommendation, please go back and add the corresponding information.")
-
-            
- 
+                        st.warning("No required skills specified for this project. To get AI recommendations, please go back and add the corresponding information.")
                 
             # --- Bottom navigation buttons ---
             st.divider()
@@ -1184,7 +1217,7 @@ class ProjectManagementSystem:
         complexity = task_data.get('complexity', 3)
         
         # Use internal recommendation system
-        rec_duration, rec_budget = self.get_task_recommendations(category, complexity)
+        rec_duration, rec_budget = self.get_task_recommendations(complexity)
         
         st.markdown("### 🤖 AI Predictions")
         
