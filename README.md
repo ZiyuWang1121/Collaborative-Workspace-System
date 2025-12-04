@@ -7,7 +7,7 @@ versioning.
 
 ## Workload Distribution
 | Team Member | Contributions |
-|------|-------------|------------------|
+|------|------------------|
 | **Wang	Ziyu** |   Coding for Collaborative System, Data Simulation & Visualization, OO Diagram, System Demo Record |
 | **Zhang	Haowen** |   Coding for Recommendation & Prediction Models, Model Result Visualization |
 | **Ng	Tsz Wing** |   Project Report |
