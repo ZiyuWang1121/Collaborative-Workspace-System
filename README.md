@@ -5,14 +5,6 @@ users to define a project, member and project task. It provides functions of pro
 scheduling, profiling and roles, progress tracking and status, and document 
 versioning. 
 
-## Workload Distribution
-| Team Member | Contributions |
-|------|------------------|
-| **Wang	Ziyu** |   Coding for Collaborative System, Data Simulation & Visualization, OO Diagram, System Demo Record |
-| **Zhang	Haowen** |   Coding for Recommendation & Prediction Models, Model Result Visualization |
-| **Ng	Tsz Wing** |   Project Report |
-| **Cheng	Yuen Chit** |   PowerPoint Slides & Presentation Recording |
-
 ## Testing Instruction
 Please refer to the following steps to use this system:  
 1. Clone or download the repository
