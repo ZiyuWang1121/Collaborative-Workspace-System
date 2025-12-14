@@ -15,9 +15,11 @@ versioning.
 
 ## Testing Instruction
 Please refer to the following steps to use this system:  
-1. Download all the files and make sure that the directories are in original order.
-2. Open your terminal and go to the correct directory.
-3. Use the command `streamlit run main.py` to activate the system.
+1. Clone or download the repository
+2. Important: Due to file size limits, the trained model is not hosted directly on GitHub. You must:
+   - Open deep_skill_model.pth.txt in the repository.
+   - Follow the link inside to download the model separately and place it in the correct project folder.
+3. Open your terminal and run `streamlit run main.py` from the project directory.
 4. You can then input your own data or use the "Generate sample data" in the sidebar for demonstration.
 
 ## Project Objectives
