@@ -7,10 +7,10 @@ Please refer to the following steps to use this system:
 
 1. Download Project11_Collaborative-Workspace-System.zip from Moodle/Clone or download the repository from GitHub
 2. Extract to the local directory
-3. Important *(if you download from Moodle, please ignore)*: Due to file size limits, the trained model is not hosted directly on GitHub. You must:
+3. Important: Due to file size limits, the trained model is not hosted directly on GitHub. You must:
    - Open deep_skill_model.pth.txt in the repository.
    - Follow the link inside to download the model separately and place it in the correct project folder.
-4. Install dependencies: pip install -r requirements.txt
+4. Install dependencies: `pip install -r requirements.txt`
 5. Open your terminal and run `streamlit run main.py` from the project directory.
 6. You can then input your own data or use the "Generate sample data" in the sidebar for demonstration.
 
