@@ -1,6 +1,6 @@
 # Collaborative-Workspace-System 
 ## (2025 Sem 1, Supervisor: Dr Lau)
-This project aims to develop a collaborative workspace system. The system allows users to define a project, member and project task. It provides functions of project scheduling, profiling and roles, progress tracking and status, and document versioning. 
+This project aims to develop a system that automates task-employee matching in IT projects. The system supports core project management functions, including project and task definition, scheduling, role profiling, progress tracking, and basic notifications.
 
 ## Testing Instruction
 Please refer to the following steps to use this system:  
@@ -15,15 +15,11 @@ Please refer to the following steps to use this system:
 6. You can then input your own data or use the "Generate sample data" in the sidebar for demonstration.
 
 ## Project Objectives
--  Design the databases, identify/collect/simulate the data, and draw object
-oriented diagrams for the system’s functions. 
--  Develop all these functions (i.e. a library’s function call), and group some 
-functions into a class (i.e. program library). 
--  Use text mining model(s) to analyze the project and skills information. 
--  Use a data mining model model(s) for relating the project skill requirement and 
-staff profiles.  
--   Use data visualization to generate and visualize the project skills requirement 
-and staff profiles analysis.
+- Design the databases, identify/collect/simulate the data, and draw object-oriented diagrams for the system’s functions.
+- Develop all these functions (i.e., a library’s function call), and group some functions into a class (i.e, a program library).
+- Use a data mining model for relating the project skill requirements and staff profiles.
+- Use data visualization to generate and visualize the project skills requirement and staff profiles analysis.
+
 
 ## Assessment
 -  Group Project Presentation (10%)
