@@ -1,4 +1,4 @@
-# app.py
+# project_management_system.py
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
@@ -194,8 +194,8 @@ class ProjectManagementSystem:
                 return []
         else:
             # Fallback: extract from required_skillsets
-            required_skills = project_data.get('required_skillsets', '')
-            skills_list = [skill.strip() for skill in required_skills.split(';') if skill.strip()] if required_skills else []
+            required_skills = self.get_predictions(project_data)
+            skills_list = required_skills
             st.session_state.current_recommendation_skills = skills_list
             return skills_list
     

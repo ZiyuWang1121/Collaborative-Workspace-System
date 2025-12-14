@@ -56,7 +56,6 @@ class DeepSkillPredictor:
                 predicted_skills.append((skill, prob))
         
         predicted_skills.sort(key=lambda x: x[1], reverse=True)
-        
         return [skill for skill, prob in predicted_skills]
     
     def load_model(self, filepath):
